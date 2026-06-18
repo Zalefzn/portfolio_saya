@@ -201,4 +201,22 @@ document.addEventListener("DOMContentLoaded", function() {
       }, 100);
     });
   }
+
+  // dynamic age beside birthday text
+  const birthDate = document.getElementById("birthDate");
+  const ageText = document.getElementById("ageText");
+
+  if (birthDate && ageText) {
+    const birthday = new Date(birthDate.getAttribute("datetime"));
+    const today = new Date();
+    let age = today.getFullYear() - birthday.getFullYear();
+    const monthDiff = today.getMonth() - birthday.getMonth();
+    const dayDiff = today.getDate() - birthday.getDate();
+
+    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+      age--;
+    }
+
+    ageText.textContent = ` (${age} Tahun)`;
+  }
 });
