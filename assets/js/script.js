@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function() {
   if (navigationLinks.length > 0 && pages.length > 0) {
     for (let i = 0; i < navigationLinks.length; i++) {
       navigationLinks[i].addEventListener("click", function () {
-        const pageName = this.innerHTML.trim().toLowerCase();
+        const pageName = (this.dataset.page || this.textContent).trim().toLowerCase();
         
         // First, remove active from all links and pages
         for (let j = 0; j < navigationLinks.length; j++) {

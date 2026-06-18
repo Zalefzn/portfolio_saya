@@ -57,6 +57,11 @@
     />
 
     <!--
+    - Tailwind CSS
+  -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!--
     - custom css link
   -->
     <link rel="stylesheet" href="./assets/css/style.css" />
@@ -210,19 +215,39 @@
         <nav class="navbar">
           <ul class="navbar-list">
             <li class="navbar-item">
-              <button class="navbar-link active" data-nav-link data-translate="about">About</button>
+              <button class="navbar-link active" data-nav-link data-page="about" data-translate="about">
+                <span class="navbar-icon">
+                  <ion-icon name="person-outline"></ion-icon>
+                </span>
+                <span class="navbar-text">About</span>
+              </button>
             </li>
 
             <li class="navbar-item">
-              <button class="navbar-link" data-nav-link data-translate="resume">Resume</button>
+              <button class="navbar-link" data-nav-link data-page="resume" data-translate="resume">
+                <span class="navbar-icon">
+                  <ion-icon name="document-text-outline"></ion-icon>
+                </span>
+                <span class="navbar-text">Resume</span>
+              </button>
             </li>
 
             <li class="navbar-item">
-              <button class="navbar-link" data-nav-link data-translate="portfolio">Portfolio</button>
+              <button class="navbar-link" data-nav-link data-page="portfolio" data-translate="portfolio">
+                <span class="navbar-icon">
+                  <ion-icon name="briefcase-outline"></ion-icon>
+                </span>
+                <span class="navbar-text">Portfolio</span>
+              </button>
             </li>
 
             <li class="navbar-item">
-              <button class="navbar-link" data-nav-link data-translate="certificates">Certificates</button>
+              <button class="navbar-link" data-nav-link data-page="certificates" data-translate="certificates">
+                <span class="navbar-icon">
+                  <ion-icon name="ribbon-outline"></ion-icon>
+                </span>
+                <span class="navbar-text">Certificates</span>
+              </button>
             </li>
           </ul>
         </nav>
@@ -482,9 +507,10 @@
                     Apps
                   </p>
                   <iframe
-                    src="./assets/sertificates/full-stack-laravel-flutter-2021-building-e-commerce-and-chat-apps-rizal-fauzan.pdf"
+                    src="./assets/sertificates/full-stack-laravel-flutter-2021-building-e-commerce-and-chat-apps-rizal-fauzan.pdf#view=FitH&toolbar=0&navpanes=0"
                     title="Certificate Preview"
                     class="certificates-pdf"
+                    loading="lazy"
                   ></iframe>
                 </div>
               </li>
@@ -496,9 +522,10 @@
                     Mastering Flutter 20 Membangun Aplikasi Travel dan Pesawat
                   </p>
                   <iframe
-                    src="./assets/sertificates/mastering-flutter-20-membangun-aplikasi-travel-dan-pesawat-rizal-fauzan.pdf"
+                    src="./assets/sertificates/mastering-flutter-20-membangun-aplikasi-travel-dan-pesawat-rizal-fauzan.pdf#view=FitH&toolbar=0&navpanes=0"
                     title="Certificate Preview"
                     class="certificates-pdf"
+                    loading="lazy"
                   ></iframe>
                 </div>
               </li>
@@ -508,9 +535,10 @@
                   <h4 class="h4 certificates-item-title">SQL Advanced</h4>
                   <p class="certificates-item-text">HackerRank</p>
                   <iframe
-                    src="./assets/sertificates/sql_advanced certificate.pdf"
+                    src="./assets/sertificates/sql_advanced certificate.pdf#view=FitH&toolbar=0&navpanes=0"
                     title="Certificate Preview"
                     class="certificates-pdf"
+                    loading="lazy"
                   ></iframe>
                 </div>
               </li>
@@ -522,9 +550,10 @@
                   </h4>
                   <p class="certificates-item-text">HackerRank</p>
                   <iframe
-                    src="./assets/sertificates/problem_solving_basic certificate.pdf"
+                    src="./assets/sertificates/problem_solving_basic certificate.pdf#view=FitH&toolbar=0&navpanes=0"
                     title="Certificate Preview"
                     class="certificates-pdf"
+                    loading="lazy"
                   ></iframe>
                 </div>
               </li>
@@ -1640,9 +1669,10 @@
                     Flutter Dart Crash Course Modern UI Design
                   </p>
                   <iframe
-                    src="./assets/sertificates/flutter-dart-crash-course-modern-ui-design-rizal-fauzan.pdf"
+                    src="./assets/sertificates/flutter-dart-crash-course-modern-ui-design-rizal-fauzan.pdf#view=FitH&toolbar=0&navpanes=0"
                     title="Certificate Preview"
                     class="certificates-pdf"
+                    loading="lazy"
                   ></iframe>
                 </div>
               </li>
@@ -1656,9 +1686,10 @@
                     Flutter Developer Provider State Management
                   </p>
                   <iframe
-                    src="./assets/sertificates/flutter-developer-provider-state-management-rizal-fauzan.pdf"
+                    src="./assets/sertificates/flutter-developer-provider-state-management-rizal-fauzan.pdf#view=FitH&toolbar=0&navpanes=0"
                     title="Certificate Preview"
                     class="certificates-pdf"
+                    loading="lazy"
                   ></iframe>
                 </div>
               </li>
@@ -1672,9 +1703,10 @@
                     Full Stack JavaScript Developer Website Travel
                   </p>
                   <iframe
-                    src="./assets/sertificates/full-stack-javascript-developer-website-travel-rizal-fauzan.pdf"
+                    src="./assets/sertificates/full-stack-javascript-developer-website-travel-rizal-fauzan.pdf#view=FitH&toolbar=0&navpanes=0"
                     title="Certificate Preview"
                     class="certificates-pdf"
+                    loading="lazy"
                   ></iframe>
                 </div>
               </li>
@@ -1689,9 +1721,10 @@
                     Apps
                   </p>
                   <iframe
-                    src="./assets/sertificates/full-stack-laravel-flutter-2021-building-e-commerce-and-chat-apps-rizal-fauzan.pdf"
+                    src="./assets/sertificates/full-stack-laravel-flutter-2021-building-e-commerce-and-chat-apps-rizal-fauzan.pdf#view=FitH&toolbar=0&navpanes=0"
                     title="Certificate Preview"
                     class="certificates-pdf"
+                    loading="lazy"
                   ></iframe>
                 </div>
               </li>
@@ -1701,9 +1734,10 @@
                   <h4 class="h4 certificates-item-title">JavaScript Basic</h4>
                   <p class="certificates-item-text">HackerRank</p>
                   <iframe
-                    src="./assets/sertificates/javascript_basic certificate.pdf"
+                    src="./assets/sertificates/javascript_basic certificate.pdf#view=FitH&toolbar=0&navpanes=0"
                     title="Certificate Preview"
                     class="certificates-pdf"
+                    loading="lazy"
                   ></iframe>
                 </div>
               </li>
@@ -1715,9 +1749,10 @@
                   </h4>
                   <p class="certificates-item-text">HackerRank</p>
                   <iframe
-                    src="./assets/sertificates/javascript_intermediate certificate.pdf"
+                    src="./assets/sertificates/javascript_intermediate certificate.pdf#view=FitH&toolbar=0&navpanes=0"
                     title="Certificate Preview"
                     class="certificates-pdf"
+                    loading="lazy"
                   ></iframe>
                 </div>
               </li>
@@ -1729,9 +1764,10 @@
                   </h4>
                   <p class="certificates-item-text">HackerRank</p>
                   <iframe
-                    src="./assets/sertificates/problem_solving_basic certificate.pdf"
+                    src="./assets/sertificates/problem_solving_basic certificate.pdf#view=FitH&toolbar=0&navpanes=0"
                     title="Certificate Preview"
                     class="certificates-pdf"
+                    loading="lazy"
                   ></iframe>
                 </div>
               </li>
@@ -1741,9 +1777,10 @@
                   <h4 class="h4 certificates-item-title">SQL Advanced</h4>
                   <p class="certificates-item-text">HackerRank</p>
                   <iframe
-                    src="./assets/sertificates/sql_advanced certificate.pdf"
+                    src="./assets/sertificates/sql_advanced certificate.pdf#view=FitH&toolbar=0&navpanes=0"
                     title="Certificate Preview"
                     class="certificates-pdf"
+                    loading="lazy"
                   ></iframe>
                 </div>
               </li>
@@ -1755,9 +1792,10 @@
                     Mastering Flutter 20 Membangun Aplikasi Travel dan Pesawat
                   </p>
                   <iframe
-                    src="./assets/sertificates/mastering-flutter-20-membangun-aplikasi-travel-dan-pesawat-rizal-fauzan.pdf"
+                    src="./assets/sertificates/mastering-flutter-20-membangun-aplikasi-travel-dan-pesawat-rizal-fauzan.pdf#view=FitH&toolbar=0&navpanes=0"
                     title="Certificate Preview"
                     class="certificates-pdf"
+                    loading="lazy"
                   ></iframe>
                 </div>
               </li>
@@ -1769,9 +1807,10 @@
                   </h4>
                   <p class="certificates-item-text">16221012 - Rizal Fauzan</p>
                   <iframe
-                    src="./assets/sertificates/16221012 - Rizal Fauzan.pdf"
+                    src="./assets/sertificates/16221012 - Rizal Fauzan.pdf#view=FitH&toolbar=0&navpanes=0"
                     title="Certificate Preview"
                     class="certificates-pdf"
+                    loading="lazy"
                   ></iframe>
                 </div>
               </li>
@@ -1783,9 +1822,10 @@
                     Sertifikat Muhammad Rizal Fauzan
                   </p>
                   <iframe
-                    src="./assets/sertificates/Sertifikat Muhammad Rizal Fauzan.pdf"
+                    src="./assets/sertificates/Sertifikat Muhammad Rizal Fauzan.pdf#view=FitH&toolbar=0&navpanes=0"
                     title="Certificate Preview"
                     class="certificates-pdf"
+                    loading="lazy"
                   ></iframe>
                 </div>
               </li>
@@ -1797,9 +1837,10 @@
                     Sertifikat Muhammad Rizal Fauzan Flutter
                   </p>
                   <iframe
-                    src="./assets/sertificates/Sertifikat Muhammad Rizal Fauzan Flutter.pdf"
+                    src="./assets/sertificates/Sertifikat Muhammad Rizal Fauzan Flutter.pdf#view=FitH&toolbar=0&navpanes=0"
                     title="Certificate Preview"
                     class="certificates-pdf"
+                    loading="lazy"
                   ></iframe>
                 </div>
               </li>

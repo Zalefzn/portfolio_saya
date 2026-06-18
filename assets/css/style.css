@@ -284,7 +284,7 @@ article.active {
 
 main {
   margin: 15px 12px;
-  margin-bottom: 75px;
+  margin-bottom: 110px;
   min-width: 259px;
 }
 
@@ -472,6 +472,57 @@ main {
   transition: color var(--transition-1);
 }
 
+.navbar-icon { display: none; }
+
+@media (max-width: 580px) {
+  .navbar-list {
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    gap: 0;
+    padding: 6px 8px;
+  }
+
+  .navbar-item { flex: 1; min-width: 0; }
+
+  .navbar-link {
+    width: 100%;
+    padding: 12px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 13px;
+  }
+
+  .navbar-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .navbar-icon ion-icon { font-size: 20px; }
+
+  .navbar-text {
+    line-height: 1;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+  }
+}
+
+.navbar-list::-webkit-scrollbar { height: 0; }
+
+.navbar-list { scrollbar-width: none; }
+
+.navbar-list::-webkit-scrollbar-thumb { background: transparent; }
+
+.navbar-list::-webkit-scrollbar-track { background: transparent; }
+
+.navbar-list::-webkit-scrollbar-button { width: 0; }
+
 .navbar-link:hover,
 .navbar-link:focus { color: var(--orange-yellow-crayola); }
 
@@ -524,7 +575,19 @@ main {
 .certificates-list {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .certificates-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .certificates-list {
+    grid-template-columns: 1fr;
+  }
 }
 
 .certificates-item-title {
@@ -540,9 +603,43 @@ main {
 
 .certificates-pdf {
   width: 100%;
-  height: 400px;
+  height: clamp(360px, 62vh, 680px);
+  min-height: 360px;
   border: 1px solid hsl(0, 0%, 90%);
-  border-radius: 12px;
+  border-radius: 14px;
+  display: block;
+  background: hsl(0, 0%, 100%);
+}
+
+.certificates-item { height: 100%; }
+
+.certificates-item .content-card {
+  height: 100%;
+  padding: 18px;
+  cursor: default;
+}
+
+.certificates-item-title,
+.certificates-item-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.certificates-item-title { -webkit-line-clamp: 2; }
+
+.certificates-item-text { -webkit-line-clamp: 4; margin-bottom: 14px; }
+
+@media (max-width: 580px) {
+  .certificates-list { gap: 16px; }
+
+  .certificates-item .content-card { padding: 14px; }
+
+  .certificates-pdf {
+    height: clamp(320px, 60vh, 520px);
+    min-height: 320px;
+    border-radius: 12px;
+  }
 }
 
 
@@ -562,6 +659,28 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 15px;
+}
+
+@media (max-width: 420px) {
+  main { margin: 12px 10px; margin-bottom: 120px; }
+
+  .navbar-link {
+    padding: 10px 6px;
+    gap: 5px;
+    font-size: 12px;
+  }
+
+  .navbar-icon ion-icon { font-size: 18px; }
+
+  .navbar-text { font-size: 11px; }
+
+  .timeline-list { margin-left: 30px; }
+
+  .timeline-item:not(:last-child)::before { left: -20px; }
+
+  .timeline-item::after { left: -23px; }
+
+  .fun-facts-list { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
 }
 
 .fun-facts-item .content-card {
@@ -643,8 +762,8 @@ main {
   position: fixed;
   bottom: 30px;
   right: 30px;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background: hsl(210, 100%, 60%);
   color: white;
@@ -652,14 +771,30 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
+  font-size: 24px;
   cursor: pointer;
   z-index: 999999;
-  opacity: 1;
-  visibility: visible;
+  opacity: 0;
+  visibility: hidden;
   transition: all 0.3s ease;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+}
+
+.scroll-to-top.active {
+  opacity: 1;
+  visibility: visible;
   pointer-events: auto;
+}
+
+@media (max-width: 580px) {
+  .scroll-to-top {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    bottom: 80px;
+    right: 20px;
+  }
 }
 
 .scroll-to-top:hover {
