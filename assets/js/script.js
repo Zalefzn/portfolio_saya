@@ -219,22 +219,4 @@ document.addEventListener("DOMContentLoaded", function() {
 
     ageText.textContent = ` (${age} Tahun)`;
   }
-
-  const visitorCountEl = document.getElementById("visitorCount");
-  if (visitorCountEl) {
-    const namespace = "rizal-fauzan-portfolio";
-    const key = "visits";
-
-    fetch(`https://api.countapi.xyz/hit/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}`)
-      .then((res) => res.json())
-      .then((data) => {
-        const value = Number(data && data.value);
-        if (Number.isFinite(value)) {
-          visitorCountEl.textContent = value.toLocaleString("id-ID");
-        }
-      })
-      .catch(() => {
-        visitorCountEl.textContent = "—";
-      });
-  }
 });
