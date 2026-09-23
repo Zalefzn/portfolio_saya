@@ -144,6 +144,21 @@ code {
 
 .form-error:empty { display: none; }
 
+.form-success { color: #16a34a; font-size: 13px; }
+
+.form-success:empty { display: none; }
+
+.link-btn {
+  justify-self: center;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.link-btn:hover { background: var(--accent-soft); }
+
 /* ------------------------------------------------------------- auth */
 
 .auth {

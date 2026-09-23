@@ -31,6 +31,9 @@
     return;
   }
 
+  // read before the client consumes the tokens in the URL
+  const arrivedFromResetLink = /type=recovery/.test(location.hash + location.search);
+
   const client = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {
     auth: { storageKey: "chat-admin-auth:" + new URL(cfg.supabaseUrl).host, persistSession: true, autoRefreshToken: true }
   });
@@ -619,6 +622,79 @@
     enterInbox(data.session);
   });
 
+  // ---------------------------------------------------------- password
+
+  // reset links come back to this page, so the redirect target must be in
+  // Supabase Auth → URL Configuration → Redirect URLs
+  const adminUrl = location.origin + location.pathname;
+  let passwordReturnView = "login";
+
+  const openPasswordView = (returnTo) => {
+    passwordReturnView = returnTo;
+    $("[data-password-error]").textContent = "";
+    $("[data-password-form]").reset();
+    showView("password");
+  };
+
+  $("[data-forgot]").addEventListener("click", async () => {
+    const form = $("[data-login-form]");
+    const email = form.email.value.trim();
+    const errorEl = $("[data-login-error]");
+    const infoEl = $("[data-login-info]");
+    errorEl.textContent = "";
+    infoEl.textContent = "";
+
+    if (!email || !form.email.checkValidity()) {
+      errorEl.textContent = "Type your email above first, then click “Forgot password?”.";
+      form.email.focus();
+      return;
+    }
+    const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo: adminUrl });
+    if (error) errorEl.textContent = error.message;
+    else infoEl.textContent = "If that email has an account, a reset link is on its way. Open it on this device.";
+  });
+
+  $("[data-change-password]").addEventListener("click", () => openPasswordView("inbox"));
+
+  $("[data-password-cancel]").addEventListener("click", () => {
+    history.replaceState(null, "", location.pathname);
+    if (passwordReturnView === "inbox" && me) showView("inbox");
+    else showView("login");
+  });
+
+  $("[data-password-form]").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const errorEl = $("[data-password-error]");
+    const password = form.password.value;
+    errorEl.textContent = "";
+
+    if (password !== form.confirm.value) {
+      errorEl.textContent = "The two passwords don't match.";
+      return;
+    }
+
+    const button = form.querySelector("button[type=submit]");
+    button.disabled = true;
+    const { error } = await client.auth.updateUser({ password });
+    button.disabled = false;
+
+    if (error) {
+      errorEl.textContent = error.message;
+      return;
+    }
+    form.reset();
+    history.replaceState(null, "", location.pathname);
+    const { data: { session } } = await client.auth.getSession();
+    if (session) enterInbox(session);
+    else showView("login");
+  });
+
+  // arriving from the emailed reset link
+  client.auth.onAuthStateChange((event) => {
+    if (event === "PASSWORD_RECOVERY") openPasswordView("login");
+  });
+
   document.querySelectorAll("[data-sign-out]").forEach((btn) =>
     btn.addEventListener("click", async () => {
       if (channel) client.removeChannel(channel);
@@ -632,7 +708,8 @@
   );
 
   client.auth.getSession().then(({ data: { session } }) => {
-    if (session && !session.user.is_anonymous) enterInbox(session);
+    if (arrivedFromResetLink) openPasswordView("login");
+    else if (session && !session.user.is_anonymous) enterInbox(session);
     else showView("login");
   });
 })();
