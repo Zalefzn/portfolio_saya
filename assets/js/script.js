@@ -117,6 +117,62 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
+  // project detail modal variables
+  const projectLinks = document.querySelectorAll("[data-project-link]");
+  const projectModal = document.querySelector("[data-project-modal]");
+
+  if (projectLinks.length > 0 && projectModal) {
+    const modalImgBox = projectModal.querySelector("[data-project-modal-img-box]");
+    const modalImg = projectModal.querySelector("[data-project-modal-img]");
+    const modalTitle = projectModal.querySelector("[data-project-modal-title]");
+    const modalUrl = projectModal.querySelector("[data-project-modal-url]");
+    const modalLink = projectModal.querySelector("[data-project-modal-link]");
+    const modalCloseEls = projectModal.querySelectorAll("[data-project-modal-close]");
+
+    const openProjectModal = function (data) {
+      modalTitle.textContent = data.title;
+      modalUrl.textContent = data.url;
+      modalLink.setAttribute("href", data.url);
+
+      if (data.status === "offline") {
+        modalImgBox.classList.add("is-offline");
+        modalImg.removeAttribute("src");
+      } else {
+        modalImgBox.classList.remove("is-offline");
+        modalImg.setAttribute("src", data.img);
+        modalImg.setAttribute("alt", data.title);
+      }
+
+      projectModal.classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+
+    const closeProjectModal = function () {
+      projectModal.classList.remove("active");
+      document.body.style.overflow = "";
+    }
+
+    for (let i = 0; i < projectLinks.length; i++) {
+      projectLinks[i].addEventListener("click", function (e) {
+        e.preventDefault();
+        openProjectModal({
+          title: this.dataset.popupTitle,
+          url: this.dataset.popupUrl,
+          img: this.dataset.popupImg,
+          status: this.dataset.popupStatus
+        });
+      });
+    }
+
+    for (let i = 0; i < modalCloseEls.length; i++) {
+      modalCloseEls[i].addEventListener("click", closeProjectModal);
+    }
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeProjectModal();
+    });
+  }
+
   // contact form variables (only if they exist)
   const form = document.querySelector("[data-form]");
   const formInputs = document.querySelectorAll("[data-form-input]");
@@ -139,32 +195,62 @@ document.addEventListener("DOMContentLoaded", function() {
   // page navigation variables
   const navigationLinks = document.querySelectorAll("[data-nav-link]");
   const pages = document.querySelectorAll("[data-page]");
+  const activePageStorageKey = "activePage";
+
+  // switch to a given page (used by nav clicks and on page load restore)
+  const switchToPage = function (pageName) {
+    let matched = false;
+
+    for (let j = 0; j < pages.length; j++) {
+      if (pageName === pages[j].dataset.page) {
+        matched = true;
+        break;
+      }
+    }
+
+    if (!matched) return false;
+
+    for (let j = 0; j < navigationLinks.length; j++) {
+      navigationLinks[j].classList.remove("active");
+    }
+    for (let j = 0; j < pages.length; j++) {
+      pages[j].classList.remove("active");
+    }
+
+    for (let j = 0; j < navigationLinks.length; j++) {
+      if (pageName === navigationLinks[j].dataset.page) {
+        navigationLinks[j].classList.add("active");
+      }
+    }
+    for (let j = 0; j < pages.length; j++) {
+      if (pageName === pages[j].dataset.page) {
+        pages[j].classList.add("active");
+      }
+    }
+
+    return true;
+  }
 
   // add event to all nav link (only if they exist)
   if (navigationLinks.length > 0 && pages.length > 0) {
     for (let i = 0; i < navigationLinks.length; i++) {
       navigationLinks[i].addEventListener("click", function () {
         const pageName = (this.dataset.page || this.textContent).trim().toLowerCase();
-        
-        // First, remove active from all links and pages
-        for (let j = 0; j < navigationLinks.length; j++) {
-          navigationLinks[j].classList.remove("active");
-        }
-        for (let j = 0; j < pages.length; j++) {
-          pages[j].classList.remove("active");
-        }
-        
-        // Then add active to the clicked link and corresponding page
-        this.classList.add("active");
-        
-        for (let j = 0; j < pages.length; j++) {
-          if (pageName === pages[j].dataset.page) {
-            pages[j].classList.add("active");
-            window.scrollTo(0, 0);
-          }
+
+        if (switchToPage(pageName)) {
+          window.scrollTo(0, 0);
+          try {
+            localStorage.setItem(activePageStorageKey, pageName);
+          } catch (e) {}
         }
       });
     }
+
+    // restore the last visited page on reload
+    try {
+      const savedPage = localStorage.getItem(activePageStorageKey);
+      if (savedPage) switchToPage(savedPage);
+    } catch (e) {}
   }
 
   // scroll to top button
