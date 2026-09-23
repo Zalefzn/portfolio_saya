@@ -15,7 +15,11 @@
     list: root.querySelector("[data-chat-messages]"),
     compose: root.querySelector("[data-chat-compose]"),
     input: root.querySelector("[data-chat-input]"),
-    status: root.querySelector("[data-chat-status]")
+    status: root.querySelector("[data-chat-status]"),
+    captcha: root.querySelector("[data-chat-captcha]"),
+    presence: root.querySelector("[data-presence]"),
+    presenceOnline: root.querySelector("[data-presence-online]"),
+    presenceOffline: root.querySelector("[data-presence-offline]")
   };
 
   const strings = {
@@ -26,6 +30,7 @@
       failed: "Message could not be sent. Please try again.",
       startFailed: "Could not start the chat. Please try again or use WhatsApp / email.",
       rateLimited: "You're sending messages too fast. Please wait a moment.",
+      captcha: "Please complete the security check first.",
       newReply: "New reply",
       welcome: "Hi! Thanks for reaching out. Leave your message here and I'll reply as soon as I can — you can close this page and come back later."
     },
@@ -36,6 +41,7 @@
       failed: "Pesan gagal dikirim. Silakan coba lagi.",
       startFailed: "Chat gagal dimulai. Silakan coba lagi atau hubungi lewat WhatsApp / email.",
       rateLimited: "Pesan terlalu cepat. Mohon tunggu sebentar.",
+      captcha: "Mohon selesaikan verifikasi keamanan terlebih dahulu.",
       newReply: "Balasan baru",
       welcome: "Halo! Terima kasih sudah menghubungi. Tulis pesan di sini dan saya akan membalas secepatnya — halaman ini boleh ditutup dan dibuka lagi nanti."
     }
@@ -161,6 +167,21 @@
       .subscribe();
   };
 
+  // owner online badge: a private presence channel only admins may track on
+  let presenceChannel = null;
+  const watchOwnerPresence = function () {
+    if (presenceChannel) return;
+    presenceChannel = client.channel("owner-presence", { config: { private: true } });
+    presenceChannel
+      .on("presence", { event: "sync" }, function () {
+        const online = Object.keys(presenceChannel.presenceState()).length > 0;
+        els.presence.classList.toggle("is-online", online);
+        els.presenceOnline.hidden = !online;
+        els.presenceOffline.hidden = online;
+      })
+      .subscribe();
+  };
+
   const openThread = async function () {
     show("chat");
     els.list.innerHTML = "";
@@ -176,6 +197,7 @@
 
     if (!error) data.forEach(renderMessage);
     subscribe();
+    watchOwnerPresence();
     markRead();
   };
 
@@ -199,6 +221,35 @@
     renderMessage(data);
   };
 
+  // Cloudflare Turnstile (only when a site key is configured)
+  let captchaToken = "";
+  let captchaWidget = null;
+  const captchaEnabled = !!cfg.turnstileSiteKey;
+
+  const setupCaptcha = function () {
+    if (!captchaEnabled || captchaWidget !== null) return;
+    els.captcha.hidden = false;
+    window.onChatTurnstileLoad = function () {
+      captchaWidget = window.turnstile.render(els.captcha, {
+        sitekey: cfg.turnstileSiteKey,
+        theme: "auto",
+        callback: function (token) { captchaToken = token; },
+        "expired-callback": function () { captchaToken = ""; },
+        "error-callback": function () { captchaToken = ""; }
+      });
+    };
+    const script = document.createElement("script");
+    script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onChatTurnstileLoad&render=explicit";
+    script.async = true;
+    document.head.appendChild(script);
+    captchaWidget = false; // loading
+  };
+
+  const resetCaptcha = function () {
+    captchaToken = "";
+    if (captchaWidget && window.turnstile) window.turnstile.reset(captchaWidget);
+  };
+
   // first message: create the anonymous identity + conversation
   els.start.addEventListener("submit", async function (e) {
     e.preventDefault();
@@ -215,6 +266,11 @@
     const body = String(form.get("message")).trim();
     const button = els.start.querySelector("button[type=submit]");
 
+    if (captchaEnabled && !captchaToken) {
+      setStatus(t("captcha"), true);
+      return;
+    }
+
     button.disabled = true;
     setStatus(t("sending"));
     askNotificationPermission();
@@ -222,7 +278,11 @@
     try {
       const freshIdentity = async function () {
         await client.auth.signOut().catch(function () {});
-        const { error } = await client.auth.signInAnonymously({ options: { data: { name: name } } });
+        const options = { data: { name: name } };
+        if (captchaEnabled) options.captchaToken = captchaToken;
+        const { error } = await client.auth.signInAnonymously({ options: options });
+        // a Turnstile token is single-use
+        resetCaptcha();
         if (error) throw error;
       };
 
@@ -294,8 +354,84 @@
     if (welcome) welcome.textContent = t("welcome");
   }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
 
+  // testimonials are managed from /admin/; the section stays hidden if none
+  const loadTestimonials = async function () {
+    const section = document.querySelector("[data-testimonials]");
+    if (!section) return;
+    const list = section.querySelector(".testimonials-list");
+
+    const { data, error } = await client
+      .from("testimonials")
+      .select("id, name, role, quote")
+      .eq("is_published", true)
+      .order("sort", { ascending: true })
+      .order("created_at", { ascending: true });
+    if (error || !data.length) return;
+
+    list.innerHTML = "";
+    data.forEach(function (item) {
+      const li = document.createElement("li");
+      li.className = "testimonials-item";
+
+      const card = document.createElement("div");
+      card.className = "content-card";
+      card.tabIndex = 0;
+      card.setAttribute("role", "button");
+
+      const figure = document.createElement("figure");
+      figure.className = "testimonials-avatar-box";
+      const initials = document.createElement("span");
+      initials.className = "testimonials-initials";
+      initials.textContent = item.name.trim().split(/\s+/).slice(0, 2).map(function (w) { return w.charAt(0); }).join("");
+      figure.appendChild(initials);
+
+      const title = document.createElement("h4");
+      title.className = "h4 testimonials-item-title";
+      title.textContent = item.name;
+
+      const role = document.createElement("p");
+      role.className = "testimonials-role";
+      role.textContent = item.role || "";
+
+      const text = document.createElement("div");
+      text.className = "testimonials-text";
+      const p = document.createElement("p");
+      p.textContent = item.quote;
+      text.appendChild(p);
+
+      card.append(figure, title, role, text);
+      li.appendChild(card);
+      list.appendChild(li);
+
+      const open = function () { openTestimonial(item); };
+      card.addEventListener("click", open);
+      card.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
+      });
+    });
+
+    section.hidden = false;
+  };
+
+  const openTestimonial = function (item) {
+    const modal = document.querySelector("[data-modal-container]");
+    const overlay = document.querySelector("[data-overlay]");
+    if (!modal || !overlay) return;
+    const title = modal.querySelector("[data-modal-title]");
+    const text = modal.querySelector("[data-modal-text]");
+    title.textContent = item.name + (item.role ? " — " + item.role : "");
+    text.innerHTML = "";
+    const p = document.createElement("p");
+    p.textContent = item.quote;
+    text.appendChild(p);
+    modal.classList.add("active");
+    overlay.classList.add("active");
+  };
+
   // returning visitor? pick up the existing conversation
   (async function init() {
+    loadTestimonials();
+
     const { data: { session } } = await client.auth.getSession();
     if (session) {
       const { data } = await client.from("conversations").select().maybeSingle();
@@ -306,5 +442,6 @@
       }
     }
     show("start");
-  })().catch(function () { show("start"); });
+    setupCaptcha();
+  })().catch(function () { show("start"); setupCaptcha(); });
 })();

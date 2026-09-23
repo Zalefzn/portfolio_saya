@@ -4,5 +4,9 @@
 // Never put the service_role / secret key here.
 window.CHAT_CONFIG = {
   supabaseUrl: "https://mpimdncyoajtzcjfmplc.supabase.co",
-  supabaseAnonKey: "sb_publishable_GspeNdqUgVOndQLWo_HRLg_8qDpB4Ur"
+  supabaseAnonKey: "sb_publishable_GspeNdqUgVOndQLWo_HRLg_8qDpB4Ur",
+  // Cloudflare Turnstile *site* key (public). Leave empty to disable the
+  // captcha; when set, also enable CAPTCHA in Supabase → Auth → Attack
+  // Protection with the matching *secret* key.
+  turnstileSiteKey: ""
 };

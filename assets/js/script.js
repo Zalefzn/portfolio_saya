@@ -50,6 +50,17 @@ const translationsId = {
   sourceCode: "Kode Sumber",
   getApp: "Unduh Aplikasi",
   siteUnavailable: "Situs sedang tidak tersedia",
+  archived: "Arsip",
+  caseStudies: "Studi kasus",
+  readCaseStudy: "Baca studi kasus",
+  csTagFreelance: "Freelance · Full-stack",
+  csTagFulltime: "Full-time · Full-stack",
+  csTagGov: "Pemerintahan · Frontend",
+  csFukumaru: "Pemesanan paket wisata dengan DP dan cicilan",
+  csApg: "Enam sistem enterprise: HRIS, keuangan, inventaris, dan lainnya",
+  csDigivise: "Penggajian otomatis berdasarkan absensi",
+  csSikepang: "Dashboard ketahanan pangan untuk pemerintah kabupaten",
+  archivedNote: "Situs ini sudah tidak online. Screenshot menunjukkan tampilannya saat masih aktif.",
   contactMe: "Hubungi saya",
   contactIntro: "Punya proyek, lowongan kerja, atau sekadar ingin menyapa? Chat langsung dengan saya di bawah, atau hubungi lewat WhatsApp atau email.",
   liveChat: "Live chat",
@@ -69,6 +80,7 @@ const translationsId = {
   requiredHint: "Semua kolom wajib diisi agar saya bisa menghubungi Anda kembali.",
   startChat: "Mulai Chat",
   chatReplyTime: "Biasanya membalas dalam beberapa jam",
+  chatOnline: "Sedang online",
   writeMessage: "Tulis pesan…"
 };
 
@@ -211,6 +223,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const modalLink = projectModal.querySelector("[data-project-modal-link]");
     const modalRepo = projectModal.querySelector("[data-project-modal-repo]");
     const modalStore = projectModal.querySelector("[data-project-modal-store]");
+    const modalArchived = projectModal.querySelector("[data-project-modal-archived]");
+    const modalCase = projectModal.querySelector("[data-project-modal-case]");
     const modalCloseEls = projectModal.querySelectorAll("[data-project-modal-close]");
 
     const setOptionalLink = function (el, href) {
@@ -225,10 +239,17 @@ document.addEventListener("DOMContentLoaded", function() {
       modalLink.setAttribute("href", data.url);
       modalDesc.textContent = data.desc || "";
 
+      setOptionalLink(modalCase, data.caseStudy ? "./case-studies/" + data.caseStudy + "/" : "");
       setOptionalLink(modalRepo, data.repo);
       setOptionalLink(modalStore, data.store);
 
-      if (data.status === "offline") {
+      // archived sites are gone: keep the screenshot, drop the dead link
+      const archived = data.status === "archived";
+      modalLink.hidden = archived;
+      modalArchived.hidden = !archived;
+      modalUrl.hidden = archived;
+
+      if (data.status === "offline" || (archived && !data.img)) {
         modalImgBox.classList.add("is-offline");
         modalImg.removeAttribute("src");
       } else {
@@ -256,6 +277,7 @@ document.addEventListener("DOMContentLoaded", function() {
           desc: (currentLang === "id" && this.dataset.popupDescId) || this.dataset.popupDesc,
           repo: this.dataset.popupRepo,
           store: this.dataset.popupStore,
+          caseStudy: this.dataset.caseStudy,
           status: this.dataset.popupStatus
         });
       });
@@ -313,9 +335,16 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     }
 
-    // restore the last visited page on reload
+    // a #page in the URL wins over the last visited page
+    const hashPage = decodeURIComponent(location.hash.slice(1)).toLowerCase();
     const savedPage = storage.get(activePageStorageKey);
-    if (savedPage) switchToPage(savedPage);
+    if (hashPage && switchToPage(hashPage)) storage.set(activePageStorageKey, hashPage);
+    else if (savedPage) switchToPage(savedPage);
+
+    window.addEventListener("hashchange", function () {
+      const page = decodeURIComponent(location.hash.slice(1)).toLowerCase();
+      if (switchToPage(page)) window.scrollTo(0, 0);
+    });
   }
 
   // scroll to top button
@@ -361,6 +390,33 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     ageText.textContent = ` (${age} ${t("age")})`;
+  }
+
+  // ongoing jobs: keep "Present (N months)" current, counting both end months
+  const ongoing = document.querySelectorAll("[data-since]");
+  const durationText = function (months, lang) {
+    const y = Math.floor(months / 12);
+    const m = months % 12;
+    const parts = [];
+    if (lang === "id") {
+      if (y) parts.push(y + " tahun");
+      if (m) parts.push(m + " bulan");
+    } else {
+      if (y) parts.push(y + (y === 1 ? " year" : " years"));
+      if (m) parts.push(m + (m === 1 ? " month" : " months"));
+    }
+    return parts.join(" ");
+  };
+
+  for (let i = 0; i < ongoing.length; i++) {
+    const el = ongoing[i];
+    const since = el.dataset.since.split("-").map(Number);
+    const today = new Date();
+    const months = (today.getFullYear() - since[0]) * 12 + (today.getMonth() + 1 - since[1]) + 1;
+    el.textContent = el.textContent.replace(/\(.*\)/, "(" + durationText(months, "en") + ")");
+    if (el.dataset.i18nId) {
+      el.dataset.i18nId = el.dataset.i18nId.replace(/\(.*\)/, "(" + durationText(months, "id") + ")");
+    }
   }
 
   // language switcher (EN is the HTML itself, ID comes from translationsId)

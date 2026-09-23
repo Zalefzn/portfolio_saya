@@ -11,7 +11,16 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 import webpush from "npm:web-push@3.6.7";
 
-const VAPID_SUBJECT = "mailto:rizalfauzan190@gmail.com";
+const OWNER_EMAIL = "rizalfauzan190@gmail.com";
+const VAPID_SUBJECT = `mailto:${OWNER_EMAIL}`;
+const ADMIN_URL = "https://portfolio-rizal-liart.vercel.app/admin/";
+
+const TOPICS: Record<string, string> = {
+  website: "Website / web app",
+  mobile_app: "Mobile app",
+  system: "Business system",
+  other: "Other",
+};
 
 // projects on the new API keys expose SUPABASE_SECRET_KEYS (a JSON map);
 // older ones only have the legacy service role JWT
@@ -59,6 +68,41 @@ async function loadConfig(): Promise<PushConfig> {
 
 type MessageRow = { conversation_id: string; sender: "visitor" | "admin"; body: string };
 
+type Conversation = {
+  visitor_name: string;
+  visitor_email: string | null;
+  visitor_phone: string | null;
+  topic: string | null;
+  admin_unread: number;
+};
+
+// Email via FormSubmit (no API key; activated once from the owner's inbox).
+// The Referer must stay the same domain the form was activated for.
+async function sendEmail(conversation: Conversation | null, record: MessageRow) {
+  const res = await fetch(`https://formsubmit.co/ajax/${OWNER_EMAIL}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Referer: ADMIN_URL,
+      Origin: new URL(ADMIN_URL).origin,
+    },
+    body: JSON.stringify({
+      _subject: `New chat from ${conversation?.visitor_name ?? "a visitor"}`,
+      _template: "table",
+      _replyto: conversation?.visitor_email ?? undefined,
+      Name: conversation?.visitor_name ?? "-",
+      Email: conversation?.visitor_email ?? "-",
+      "WhatsApp / phone": conversation?.visitor_phone ?? "-",
+      Need: TOPICS[conversation?.topic ?? ""] ?? "-",
+      Message: record.body,
+      "Reply here": `${ADMIN_URL}?c=${record.conversation_id}`,
+    }),
+  });
+  const body = await res.json().catch(() => ({}));
+  return String(body.success) === "true";
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: cors });
 
@@ -86,7 +130,11 @@ Deno.serve(async (req) => {
   webpush.setVapidDetails(VAPID_SUBJECT, config.public_key!, config.private_key!);
 
   const [{ data: conversation }, { data: subscriptions, error }] = await Promise.all([
-    supabase.from("conversations").select("visitor_name").eq("id", record.conversation_id).single(),
+    supabase
+      .from("conversations")
+      .select("visitor_name, visitor_email, visitor_phone, topic, admin_unread")
+      .eq("id", record.conversation_id)
+      .single<Conversation>(),
     supabase.from("push_subscriptions").select("id, endpoint, p256dh, auth"),
   ]);
   if (error) return json({ error: error.message }, 500);
@@ -118,8 +166,16 @@ Deno.serve(async (req) => {
     await supabase.from("push_subscriptions").delete().in("id", expired);
   }
 
+  // one email per unread burst: only for the first message since the owner
+  // last read this conversation (the counter is bumped before this runs)
+  let emailed = false;
+  if (!conversation || conversation.admin_unread <= 1) {
+    emailed = await sendEmail(conversation, record).catch(() => false);
+  }
+
   return json({
     sent: results.filter((r) => r.status === "fulfilled").length,
     failed: results.filter((r) => r.status === "rejected").length,
+    emailed,
   });
 });

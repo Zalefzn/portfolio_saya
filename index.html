@@ -71,11 +71,6 @@
       type="image/jpeg"
     />
 
-    <!--
-    - Tailwind CSS
-  -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
     <script
       defer
       src="https://cloud.umami.is/script.js"
@@ -583,27 +578,14 @@
           </section>
 
           <!--
-          - testimonials: add real client quotes as <li> items below and the
-          - section shows itself automatically (it stays hidden while empty)
+          - testimonials: loaded by chat.js from the Supabase "testimonials" table
+          - (add them in /admin/); the section stays hidden while there are none
         -->
 
           <section class="testimonials" data-testimonials hidden>
             <h3 class="h3 testimonials-title" data-translate="testimonials">Testimonials</h3>
 
             <ul class="testimonials-list has-scrollbar">
-              <!--
-              <li class="testimonials-item">
-                <div class="content-card" data-testimonials-item>
-                  <figure class="testimonials-avatar-box">
-                    <img src="./assets/images/icon-quote.svg" alt="Client name" width="60" data-testimonials-avatar />
-                  </figure>
-                  <h4 class="h4 testimonials-item-title" data-testimonials-title>Client name, Company</h4>
-                  <div class="testimonials-text" data-testimonials-text>
-                    <p>What the client said about working with you.</p>
-                  </div>
-                </div>
-              </li>
-              -->
             </ul>
           </section>
 
@@ -792,7 +774,7 @@
                   Fullstack Developer at PT Ardana Perkasa Group
                 </h4>
 
-                <span data-i18n-id="November 2025 — Sekarang (11 bulan)">November 2025 — Present (11 months)</span>
+                <span data-since="2025-11" data-i18n-id="November 2025 — Sekarang (11 bulan)">November 2025 — Present (11 months)</span>
 
                 <ul class="timeline-text-list">
                   <li data-i18n-id="Mengembangkan dan memelihara beberapa sistem enterprise: Prada BC System, DWP Assurance, Caraka Broker, Sistem Inventaris, HRIS, dan Finance System.">
@@ -1410,6 +1392,44 @@
           </header>
 
           <section class="projects">
+            <div class="case-studies">
+              <h3 class="h3 case-studies-title" data-translate="caseStudies">Case studies</h3>
+              <ul class="case-study-list">
+                <li>
+                  <a href="./case-studies/fukumaru-travel/" class="case-study-card">
+                    <img src="./assets/images/portfolio/fukumaru-travel-thumb.webp" alt="" loading="lazy" width="720" height="316" />
+                    <span class="case-study-tag" data-translate="csTagFreelance">Freelance · Full-stack</span>
+                    <strong>Fukumaru Travel</strong>
+                    <span class="case-study-desc" data-translate="csFukumaru">Tour booking with down payments and installments</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="./case-studies/ardana-perkasa-enterprise/" class="case-study-card">
+                    <img src="./assets/images/portfolio/hris-apg-thumb.webp" alt="" loading="lazy" width="720" height="316" />
+                    <span class="case-study-tag" data-translate="csTagFulltime">Full-time · Full-stack</span>
+                    <strong>PT Ardana Perkasa Group</strong>
+                    <span class="case-study-desc" data-translate="csApg">Six enterprise systems: HRIS, finance, inventory and more</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="./case-studies/hris-digivise/" class="case-study-card">
+                    <img src="./assets/images/portfolio/hris-digivise-pdf-thumb.webp" alt="" loading="lazy" width="720" height="316" />
+                    <span class="case-study-tag" data-translate="csTagFulltime">Full-time · Full-stack</span>
+                    <strong>HRIS Digivise</strong>
+                    <span class="case-study-desc" data-translate="csDigivise">Attendance-driven automatic payroll</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="./case-studies/sikepang-mimika/" class="case-study-card">
+                    <img src="./assets/images/portfolio/sikepang-mimika-thumb.webp" alt="" loading="lazy" width="720" height="316" />
+                    <span class="case-study-tag" data-translate="csTagGov">Government · Frontend</span>
+                    <strong>Sikepang Mimika</strong>
+                    <span class="case-study-desc" data-translate="csSikepang">Food security dashboard for a regency</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
             <div class="project-toolbar">
               <label class="project-search">
                 <ion-icon name="search-outline"></ion-icon>
@@ -1433,6 +1453,7 @@
                   href="https://fukumarutravel.com/"
                   data-project-link
                   data-popup-title="Fukumaru Travel"
+                  data-case-study="fukumaru-travel"
                   data-popup-url="https://fukumarutravel.com/"
                   data-popup-img="./assets/images/portfolio/fukumaru-travel.webp"
                   data-popup-desc="Travel booking platform for domestic and international tour packages (Bali, Labuan Bajo, Raja Ampat, Japan, Europe) with down-payment and installment plans."
@@ -1464,6 +1485,7 @@
                   href="https://fukumarutravel.com/login"
                   data-project-link
                   data-popup-title="Fukumaru Travel Member Area"
+                  data-case-study="fukumaru-travel"
                   data-popup-url="https://fukumarutravel.com/login"
                   data-popup-img="./assets/images/portfolio/fukumaru-travel-login.webp"
                   data-popup-desc="Customer account area of Fukumaru Travel for managing bookings and installment payments."
@@ -1495,6 +1517,7 @@
                   href="https://hris.apg.co.id/login"
                   data-project-link
                   data-popup-title="HRIS APG"
+                  data-case-study="ardana-perkasa-enterprise"
                   data-popup-url="https://hris.apg.co.id/login"
                   data-popup-img="./assets/images/portfolio/hris-apg.webp"
                   data-popup-desc="Human resource information system built at PT Ardana Perkasa Group."
@@ -1526,6 +1549,7 @@
                   href="https://dwp.bprbonding.my.id/"
                   data-project-link
                   data-popup-title="DWP BPR Bonding"
+                  data-case-study="ardana-perkasa-enterprise"
                   data-popup-url="https://dwp.bprbonding.my.id/"
                   data-popup-img="./assets/images/portfolio/dwp-bpr-bonding.webp"
                   data-popup-desc="DWP Core, the core system of DWP Assurance built at PT Ardana Perkasa Group."
@@ -1557,6 +1581,7 @@
                   href="https://finance.bprbonding.my.id/"
                   data-project-link
                   data-popup-title="Finance BPR Bonding"
+                  data-case-study="ardana-perkasa-enterprise"
                   data-popup-url="https://finance.bprbonding.my.id/"
                   data-popup-img="./assets/images/portfolio/finance-bpr-bonding.webp"
                   data-popup-desc="Finance System built at PT Ardana Perkasa Group."
@@ -1743,6 +1768,7 @@
                   href="https://dev.inventaris.apg.co.id/login"
                   data-project-link
                   data-popup-title="Sistem Inventaris APG"
+                  data-case-study="ardana-perkasa-enterprise"
                   data-popup-url="https://dev.inventaris.apg.co.id/login"
                   data-popup-img="./assets/images/portfolio/inventaris-apg.webp"
                   data-popup-desc="Asset inventory system built at PT Ardana Perkasa Group."
@@ -1774,6 +1800,7 @@
                   href="https://raport.pradabc.com"
                   data-project-link
                   data-popup-title="Raport Pradabc"
+                  data-case-study="ardana-perkasa-enterprise"
                   data-popup-url="https://raport.pradabc.com"
                   data-popup-img="./assets/images/portfolio/raport-pradabc.webp"
                   data-popup-desc="Digital report card (raport) module of the Prada BC System."
@@ -1805,6 +1832,7 @@
                   href="https://sikepang.mimikakab.go.id/login"
                   data-project-link
                   data-popup-title="Sikepang Mimika"
+                  data-case-study="sikepang-mimika"
                   data-popup-url="https://sikepang.mimikakab.go.id/login"
                   data-popup-img="./assets/images/portfolio/sikepang-mimika.webp"
                   data-popup-desc="Food security application for the Mimika Regency government: a dashboard and landing page that visualize food security data as charts and tables."
@@ -2270,15 +2298,18 @@
                   href="https://hr.digivise.id/"
                   data-project-link
                   data-popup-title="HRIS Digivise"
+                  data-case-study="hris-digivise"
                   data-popup-url="https://hr.digivise.id/"
                   data-popup-img="./assets/images/portfolio/hris-digivise-pdf.webp"
                   data-popup-desc="Human Resource Management System for employee management, attendance, payroll and reporting, with automatic payroll calculation based on attendance data."
                   data-popup-desc-id="Human Resource Management System untuk manajemen karyawan, absensi, penggajian, dan pelaporan, dengan perhitungan gaji otomatis berdasarkan data absensi."
                   data-popup-repo=""
                   data-popup-store=""
-                  data-popup-status="live"
+                  data-popup-status="archived"
                 >
-                  <figure class="project-img">
+                  <figure class="project-img is-archived">
+                    <span class="project-badge" data-translate="archived">Archived</span>
+
                     <div class="project-item-icon-box">
                       <ion-icon name="eye-outline"></ion-icon>
                     </div>
@@ -2307,9 +2338,11 @@
                   data-popup-desc-id=""
                   data-popup-repo=""
                   data-popup-store=""
-                  data-popup-status="live"
+                  data-popup-status="archived"
                 >
-                  <figure class="project-img">
+                  <figure class="project-img is-archived">
+                    <span class="project-badge" data-translate="archived">Archived</span>
+
                     <div class="project-item-icon-box">
                       <ion-icon name="eye-outline"></ion-icon>
                     </div>
@@ -2338,9 +2371,11 @@
                   data-popup-desc-id=""
                   data-popup-repo=""
                   data-popup-store=""
-                  data-popup-status="live"
+                  data-popup-status="archived"
                 >
-                  <figure class="project-img">
+                  <figure class="project-img is-archived">
+                    <span class="project-badge" data-translate="archived">Archived</span>
+
                     <div class="project-item-icon-box">
                       <ion-icon name="eye-outline"></ion-icon>
                     </div>
@@ -2369,9 +2404,11 @@
                   data-popup-desc-id=""
                   data-popup-repo=""
                   data-popup-store=""
-                  data-popup-status="live"
+                  data-popup-status="archived"
                 >
-                  <figure class="project-img">
+                  <figure class="project-img is-archived">
+                    <span class="project-badge" data-translate="archived">Archived</span>
+
                     <div class="project-item-icon-box">
                       <ion-icon name="eye-outline"></ion-icon>
                     </div>
@@ -2400,9 +2437,11 @@
                   data-popup-desc-id=""
                   data-popup-repo=""
                   data-popup-store=""
-                  data-popup-status="offline"
+                  data-popup-status="archived"
                 >
-                  <figure class="project-img project-img-offline">
+                  <figure class="project-img is-archived project-img-offline">
+                    <span class="project-badge" data-translate="archived">Archived</span>
+
                     <div class="project-item-icon-box">
                       <ion-icon name="eye-outline"></ion-icon>
                     </div>
@@ -2449,6 +2488,10 @@
                   <p class="project-modal-category">Web development</p>
                   <p class="project-modal-url" data-project-modal-url></p>
 
+                  <p class="project-modal-archived" data-project-modal-archived hidden data-translate="archivedNote">
+                    This site is no longer online. The screenshot shows how it looked while it was live.
+                  </p>
+
                   <p class="project-modal-desc" data-project-modal-desc></p>
 
                   <div class="project-modal-actions">
@@ -2461,6 +2504,16 @@
                     >
                       <span data-translate="visitWebsite">Visit Website</span>
                       <ion-icon name="open-outline"></ion-icon>
+                    </a>
+
+                    <a
+                      href="#"
+                      class="project-modal-link project-modal-link-alt"
+                      data-project-modal-case
+                      hidden
+                    >
+                      <span data-translate="readCaseStudy">Read case study</span>
+                      <ion-icon name="document-text-outline"></ion-icon>
                     </a>
 
                     <a
@@ -2829,6 +2882,9 @@
 
               <p class="form-hint" data-translate="requiredHint">All fields are required so I can get back to you.</p>
 
+              <!-- Cloudflare Turnstile renders here when a site key is configured -->
+              <div class="chat-captcha" data-chat-captcha hidden></div>
+
               <button class="form-btn" type="submit">
                 <ion-icon name="chatbubbles-outline"></ion-icon>
                 <span data-translate="startChat">Start Chat</span>
@@ -2840,7 +2896,11 @@
                 <img src="./assets/images/avatar.webp" alt="" width="40" height="40" />
                 <div>
                   <p class="chat-header-name">Rizal Fauzan</p>
-                  <p class="chat-header-status" data-translate="chatReplyTime">Usually replies within a few hours</p>
+                  <p class="chat-header-status" data-presence>
+                    <span class="presence-dot" aria-hidden="true"></span>
+                    <span data-presence-online hidden data-translate="chatOnline">Online now</span>
+                    <span data-presence-offline data-translate="chatReplyTime">Usually replies within a few hours</span>
+                  </p>
                 </div>
               </div>
 

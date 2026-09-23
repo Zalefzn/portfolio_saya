@@ -578,6 +578,365 @@
     refreshPushState();
   }
 
+  // ---------------------------------------------------------- panels
+
+  const panelButtons = document.querySelectorAll("[data-panel-btn]");
+  const testimonialsPane = $("[data-testimonials-pane]");
+
+  const showPanel = (name) => {
+    panelButtons.forEach((b) => b.classList.toggle("is-active", b.dataset.panelBtn === name));
+    const testimonials = name === "testimonials";
+    els.app.classList.toggle("is-testimonials", testimonials);
+    testimonialsPane.hidden = !testimonials;
+    if (testimonials) loadTestimonials();
+  };
+
+  panelButtons.forEach((b) => b.addEventListener("click", () => showPanel(b.dataset.panelBtn)));
+
+  // ---------------------------------------------------------- presence
+  // visitors see "Online now" while this page is open and visible
+
+  const presenceChip = $("[data-presence-chip]");
+  const presenceLabel = $("[data-presence-label]");
+  let presenceChannel = null;
+
+  const setPresenceUi = (online, label) => {
+    presenceChip.classList.toggle("is-online", online);
+    presenceLabel.textContent = label;
+  };
+
+  const syncPresence = async () => {
+    if (!presenceChannel) return;
+    if (document.hidden) {
+      await presenceChannel.untrack();
+      setPresenceUi(false, "Away");
+    } else {
+      const res = await presenceChannel.track({ since: new Date().toISOString() });
+      setPresenceUi(res === "ok", res === "ok" ? "Online" : "Offline");
+    }
+  };
+
+  const startPresence = () => {
+    if (presenceChannel) return;
+    presenceChannel = client.channel("owner-presence", {
+      config: { private: true, presence: { key: "owner" } }
+    });
+    presenceChannel.subscribe((status) => {
+      if (status === "SUBSCRIBED") syncPresence();
+      else if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") setPresenceUi(false, "Offline");
+    });
+  };
+
+  const stopPresence = () => {
+    if (presenceChannel) client.removeChannel(presenceChannel);
+    presenceChannel = null;
+    setPresenceUi(false, "Offline");
+  };
+
+  document.addEventListener("visibilitychange", syncPresence);
+
+  // ------------------------------------------------------ quick replies
+
+  const quick = {
+    popover: $("[data-quick-popover]"),
+    toggle: $("[data-quick-toggle]"),
+    list: $("[data-quick-list]"),
+    manage: $("[data-quick-manage]"),
+    form: $("[data-quick-form]"),
+    title: $("[data-quick-title]"),
+    body: $("[data-quick-body]"),
+    add: $("[data-quick-add]")
+  };
+  let quickReplies = [];
+
+  const renderQuickReplies = () => {
+    quick.list.innerHTML = "";
+    if (!quickReplies.length) {
+      const li = document.createElement("li");
+      li.className = "muted small";
+      li.style.padding = "8px 10px";
+      li.textContent = "No quick replies yet. Click Manage to add one.";
+      quick.list.appendChild(li);
+    }
+    quickReplies.forEach((q) => {
+      const li = document.createElement("li");
+      li.className = "quick-item";
+
+      const use = document.createElement("button");
+      use.type = "button";
+      use.className = "quick-use";
+      const title = document.createElement("strong");
+      title.textContent = q.title;
+      const preview = document.createElement("span");
+      preview.textContent = q.body;
+      use.append(title, preview);
+      use.addEventListener("click", () => {
+        const current = els.reply.value.trim();
+        els.reply.value = current ? current + "\n" + q.body : q.body;
+        closeQuick();
+        els.reply.focus();
+      });
+
+      const del = document.createElement("button");
+      del.type = "button";
+      del.className = "icon-btn quick-del";
+      del.title = "Delete";
+      del.setAttribute("aria-label", "Delete quick reply " + q.title);
+      del.innerHTML = '<svg><use href="#i-x" /></svg>';
+      del.addEventListener("click", async () => {
+        const { error } = await client.from("chat_quick_replies").delete().eq("id", q.id);
+        if (!error) {
+          quickReplies = quickReplies.filter((x) => x.id !== q.id);
+          renderQuickReplies();
+        }
+      });
+
+      li.append(use, del);
+      quick.list.appendChild(li);
+    });
+  };
+
+  const loadQuickReplies = async () => {
+    const { data, error } = await client
+      .from("chat_quick_replies")
+      .select("*")
+      .order("sort", { ascending: true })
+      .order("created_at", { ascending: true });
+    if (!error) {
+      quickReplies = data;
+      renderQuickReplies();
+    }
+  };
+
+  const closeQuick = () => {
+    quick.popover.hidden = true;
+    quick.toggle.setAttribute("aria-expanded", "false");
+  };
+
+  quick.toggle.addEventListener("click", () => {
+    const open = quick.popover.hidden;
+    quick.popover.hidden = !open;
+    quick.toggle.setAttribute("aria-expanded", String(open));
+  });
+
+  quick.manage.addEventListener("click", () => {
+    const managing = !quick.popover.classList.contains("is-managing");
+    quick.popover.classList.toggle("is-managing", managing);
+    quick.form.hidden = !managing;
+    quick.manage.textContent = managing ? "Done" : "Manage";
+    if (managing) quick.title.focus();
+  });
+
+  quick.add.addEventListener("click", async () => {
+    const title = quick.title.value.trim();
+    const body = quick.body.value.trim();
+    if (!title || !body) return;
+    const sort = quickReplies.reduce((max, q) => Math.max(max, q.sort), 0) + 1;
+    const { data, error } = await client
+      .from("chat_quick_replies")
+      .insert({ title, body, sort })
+      .select()
+      .single();
+    if (!error) {
+      quickReplies.push(data);
+      quick.title.value = "";
+      quick.body.value = "";
+      renderQuickReplies();
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !quick.popover.hidden) closeQuick();
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!quick.popover.hidden && !quick.popover.contains(e.target) && !quick.toggle.contains(e.target)) closeQuick();
+  });
+
+  // ------------------------------------------------------ testimonials
+
+  const tForm = $("[data-t-form]");
+  const tList = $("[data-t-list]");
+  const tEmpty = $("[data-t-empty]");
+  const tError = $("[data-t-error]");
+  const tCancel = $("[data-t-cancel]");
+  const tFormTitle = $("[data-t-form-title]");
+  let testimonials = [];
+  let editingId = null;
+
+  const resetTestimonialForm = () => {
+    editingId = null;
+    tForm.reset();
+    tFormTitle.textContent = "Add a testimonial";
+    tCancel.hidden = true;
+    tError.textContent = "";
+  };
+
+  const renderTestimonials = () => {
+    tList.innerHTML = "";
+    tEmpty.hidden = testimonials.length > 0;
+
+    testimonials.forEach((item) => {
+      const li = document.createElement("li");
+      li.className = "card t-item";
+
+      const head = document.createElement("div");
+      head.className = "t-item-head";
+      const avatar = document.createElement("span");
+      avatar.className = "avatar";
+      paintAvatar(avatar, { visitor_name: item.name, id: String(item.id) });
+      const who = document.createElement("div");
+      const name = document.createElement("div");
+      name.className = "t-item-name";
+      name.textContent = item.name;
+      const role = document.createElement("div");
+      role.className = "t-item-role";
+      role.textContent = item.role || "";
+      who.append(name, role);
+      const status = document.createElement("span");
+      status.className = "t-status" + (item.is_published ? " is-published" : "");
+      status.textContent = item.is_published ? "Published" : "Draft";
+      head.append(avatar, who, status);
+
+      const quote = document.createElement("p");
+      quote.className = "t-quote";
+      quote.textContent = item.quote;
+
+      const actions = document.createElement("div");
+      actions.className = "t-actions";
+
+      const toggle = document.createElement("button");
+      toggle.type = "button";
+      toggle.className = "btn";
+      toggle.textContent = item.is_published ? "Unpublish" : "Publish";
+      toggle.addEventListener("click", async () => {
+        const { data, error } = await client
+          .from("testimonials")
+          .update({ is_published: !item.is_published })
+          .eq("id", item.id)
+          .select()
+          .single();
+        if (!error) {
+          Object.assign(item, data);
+          renderTestimonials();
+        }
+      });
+
+      const edit = document.createElement("button");
+      edit.type = "button";
+      edit.className = "btn";
+      edit.textContent = "Edit";
+      edit.addEventListener("click", () => {
+        editingId = item.id;
+        tForm.name.value = item.name;
+        tForm.role.value = item.role || "";
+        tForm.quote.value = item.quote;
+        tForm.is_published.checked = item.is_published;
+        tFormTitle.textContent = "Edit testimonial";
+        tCancel.hidden = false;
+        tForm.name.focus();
+      });
+
+      const del = document.createElement("button");
+      del.type = "button";
+      del.className = "btn btn-danger";
+      del.textContent = "Delete";
+      let armedUntil = 0;
+      del.addEventListener("click", async () => {
+        if (Date.now() > armedUntil) {
+          armedUntil = Date.now() + 4000;
+          del.classList.add("is-armed");
+          del.textContent = "Click again";
+          setTimeout(() => {
+            if (Date.now() > armedUntil) { del.classList.remove("is-armed"); del.textContent = "Delete"; }
+          }, 4100);
+          return;
+        }
+        const { error } = await client.from("testimonials").delete().eq("id", item.id);
+        if (!error) {
+          testimonials = testimonials.filter((x) => x.id !== item.id);
+          if (editingId === item.id) resetTestimonialForm();
+          renderTestimonials();
+        }
+      });
+
+      actions.append(toggle, edit, del);
+      li.append(head, quote, actions);
+      tList.appendChild(li);
+    });
+  };
+
+  const loadTestimonials = async () => {
+    const { data, error } = await client
+      .from("testimonials")
+      .select("*")
+      .order("sort", { ascending: true })
+      .order("created_at", { ascending: true });
+    if (!error) {
+      testimonials = data;
+      renderTestimonials();
+    }
+  };
+
+  tCancel.addEventListener("click", resetTestimonialForm);
+
+  tForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    tError.textContent = "";
+    const row = {
+      name: tForm.name.value.trim(),
+      role: tForm.role.value.trim() || null,
+      quote: tForm.quote.value.trim(),
+      is_published: tForm.is_published.checked
+    };
+
+    const query = editingId
+      ? client.from("testimonials").update(row).eq("id", editingId)
+      : client.from("testimonials").insert({ ...row, sort: testimonials.length + 1 });
+    const { error } = await query.select().single();
+
+    if (error) {
+      tError.textContent = error.message;
+      return;
+    }
+    resetTestimonialForm();
+    loadTestimonials();
+  });
+
+  // ------------------------------------------------------ login captcha
+  // only when a Turnstile site key is configured (see chat-config.js)
+
+  let loginCaptchaToken = "";
+  let loginCaptchaWidget = null;
+  const captchaEnabled = !!cfg.turnstileSiteKey;
+
+  const setupLoginCaptcha = () => {
+    if (!captchaEnabled || loginCaptchaWidget !== null) return;
+    const box = $("[data-login-captcha]");
+    box.hidden = false;
+    window.onAdminTurnstileLoad = () => {
+      loginCaptchaWidget = window.turnstile.render(box, {
+        sitekey: cfg.turnstileSiteKey,
+        theme: "auto",
+        callback: (token) => { loginCaptchaToken = token; },
+        "expired-callback": () => { loginCaptchaToken = ""; },
+        "error-callback": () => { loginCaptchaToken = ""; }
+      });
+    };
+    const script = document.createElement("script");
+    script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onAdminTurnstileLoad&render=explicit";
+    script.async = true;
+    document.head.appendChild(script);
+    loginCaptchaWidget = false;
+  };
+
+  const takeCaptchaToken = () => {
+    const token = loginCaptchaToken;
+    loginCaptchaToken = "";
+    if (loginCaptchaWidget && window.turnstile) window.turnstile.reset(loginCaptchaWidget);
+    return token;
+  };
+
   // -------------------------------------------------------------- auth
 
   const enterInbox = async (session) => {
@@ -593,6 +952,8 @@
     showView("inbox");
     await loadConversations();
     subscribe();
+    startPresence();
+    loadQuickReplies();
     refreshPushState();
 
     const wanted = new URLSearchParams(location.search).get("c");
@@ -608,9 +969,16 @@
     button.disabled = true;
     errorEl.textContent = "";
 
+    if (captchaEnabled && !loginCaptchaToken) {
+      button.disabled = false;
+      errorEl.textContent = "Please complete the security check first.";
+      return;
+    }
+
     const { data, error } = await client.auth.signInWithPassword({
       email: String(form.get("email")).trim(),
-      password: String(form.get("password"))
+      password: String(form.get("password")),
+      options: captchaEnabled ? { captchaToken: takeCaptchaToken() } : undefined
     });
 
     button.disabled = false;
@@ -649,7 +1017,14 @@
       form.email.focus();
       return;
     }
-    const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo: adminUrl });
+    if (captchaEnabled && !loginCaptchaToken) {
+      errorEl.textContent = "Please complete the security check first.";
+      return;
+    }
+    const { error } = await client.auth.resetPasswordForEmail(email, {
+      redirectTo: adminUrl,
+      captchaToken: captchaEnabled ? takeCaptchaToken() : undefined
+    });
     if (error) errorEl.textContent = error.message;
     else infoEl.textContent = "If that email has an account, a reset link is on its way. Open it on this device.";
   });
@@ -699,17 +1074,20 @@
     btn.addEventListener("click", async () => {
       if (channel) client.removeChannel(channel);
       channel = null;
+      stopPresence();
+      showPanel("inbox");
       await client.auth.signOut();
       me = null;
       conversations = [];
       closeConversation();
       showView("login");
+      setupLoginCaptcha();
     })
   );
 
   client.auth.getSession().then(({ data: { session } }) => {
     if (arrivedFromResetLink) openPasswordView("login");
     else if (session && !session.user.is_anonymous) enterInbox(session);
-    else showView("login");
+    else { showView("login"); setupLoginCaptcha(); }
   });
 })();
