@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Chat Admin</title>
+    <meta name="theme-color" content="#4f7cff" />
+
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icons/icon-192.png" type="image/png" />
+    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Chat Admin" />
+
+    <!-- apply the saved theme before paint -->
+    <script>
+      try {
+        var t = localStorage.getItem("admin-theme");
+        if (t) document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./admin.css" />
+  </head>
+
+  <body>
+    <!-- icon sprite -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4 13h4l1.5 3h5L16 13h4M5.5 5h13l2.5 8v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5l2.5-8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+      <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2h-15L6 16Zm4 4a2 2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+      <symbol id="i-logout" viewBox="0 0 24 24"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 16l-4-4 4-4M6 12h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m20 20-4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+      <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12 20 4l-6 16-3-7-7-1Z" fill="currentColor"/></symbol>
+      <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 11v5m0-8.5v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.5 3.5h3l1.5 4-2 1.5a11 11 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2 2A16 16 0 0 1 4.5 5.5a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+      <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Zm0 16.4a7.4 7.4 0 0 1-3.8-1l-.3-.2-2.7.7.7-2.6-.2-.3A7.4 7.4 0 1 1 12 19.4Zm4-5.5c-.2-.1-1.3-.7-1.5-.7s-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6 6 0 0 1-3-2.6c-.2-.4.2-.4.6-1.2.1-.1 0-.3 0-.4l-.7-1.6c-.2-.4-.4-.4-.5-.4h-.4a.8.8 0 0 0-.6.3 2.5 2.5 0 0 0-.8 1.9 4.4 4.4 0 0 0 .9 2.3 10 10 0 0 0 3.8 3.4c1.4.6 2 .7 2.7.6.4-.1 1.3-.5 1.5-1.1.2-.5.2-1 .1-1.1l-.4-.2Z" fill="currentColor"/></symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6m4-6v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-chat" viewBox="0 0 24 24"><path d="M5 5h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-7l-5 4v-4H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    </svg>
+
+    <!-- not configured -->
+    <main class="auth" data-view="unconfigured" hidden>
+      <section class="auth-card">
+        <h1>Chat is not configured</h1>
+        <p class="muted">
+          Fill in <code>supabaseUrl</code> and <code>supabaseAnonKey</code> in
+          <code>assets/js/chat-config.js</code>.
+        </p>
+      </section>
+    </main>
+
+    <!-- login -->
+    <main class="auth" data-view="login" hidden>
+      <aside class="auth-hero">
+        <div class="auth-brand">
+          <img src="./icons/icon-192.png" alt="" width="40" height="40" />
+          <span>Portfolio Chat</span>
+        </div>
+        <div>
+          <h2>Every visitor, one inbox.</h2>
+          <p>Reply to people who reach out from your portfolio in real time, and get notified on every device.</p>
+        </div>
+        <ul class="auth-points">
+          <li>Live conversations over WebSocket</li>
+          <li>Push notifications, even when closed</li>
+          <li>Customer contact details at a glance</li>
+        </ul>
+      </aside>
+
+      <section class="auth-card">
+        <h1>Welcome back</h1>
+        <p class="muted">Sign in to your admin account.</p>
+
+        <form class="auth-form" data-login-form>
+          <label class="field">
+            <span>Email</span>
+            <input type="email" name="email" autocomplete="username" placeholder="you@example.com" required />
+          </label>
+          <label class="field">
+            <span>Password</span>
+            <input type="password" name="password" autocomplete="current-password" placeholder="••••••••" required />
+          </label>
+          <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+          <p class="form-error" data-login-error role="alert"></p>
+        </form>
+      </section>
+    </main>
+
+    <!-- signed in but not an admin -->
+    <main class="auth" data-view="forbidden" hidden>
+      <section class="auth-card">
+        <h1>No access</h1>
+        <p class="muted">
+          This account is not a chat admin. Add its user id to the
+          <code>chat_admins</code> table, then sign in again.
+        </p>
+        <p class="muted small">User id: <code data-user-id></code></p>
+        <button type="button" class="btn" data-sign-out>Sign out</button>
+      </section>
+    </main>
+
+    <!-- app -->
+    <div class="app" data-view="inbox" hidden>
+      <nav class="rail" aria-label="Main">
+        <img class="rail-logo" src="./icons/icon-192.png" alt="Portfolio Chat" width="36" height="36" />
+
+        <button type="button" class="rail-btn is-active" aria-label="Inbox" title="Inbox">
+          <svg><use href="#i-inbox" /></svg>
+          <span class="rail-badge" data-total-unread hidden></span>
+        </button>
+
+        <div class="rail-spacer"></div>
+
+        <button type="button" class="rail-btn" data-push-toggle aria-label="Enable notifications" title="Enable notifications">
+          <svg><use href="#i-bell" /></svg>
+        </button>
+        <button type="button" class="rail-btn" data-theme-toggle aria-label="Toggle theme" title="Toggle theme">
+          <svg><use href="#i-moon" data-theme-icon /></svg>
+        </button>
+        <button type="button" class="rail-btn" data-sign-out aria-label="Sign out" title="Sign out">
+          <svg><use href="#i-logout" /></svg>
+        </button>
+      </nav>
+
+      <aside class="list-pane">
+        <header class="list-header">
+          <div class="list-title">
+            <h1>Inbox</h1>
+            <span class="count-chip" data-conversation-count>0</span>
+          </div>
+
+          <label class="search">
+            <svg><use href="#i-search" /></svg>
+            <input type="search" placeholder="Search name, email, message…" data-search aria-label="Search conversations" />
+          </label>
+
+          <div class="segmented" role="tablist" aria-label="Filter">
+            <button type="button" role="tab" class="is-active" data-filter="all" aria-selected="true">All</button>
+            <button type="button" role="tab" data-filter="unread" aria-selected="false">Unread</button>
+          </div>
+        </header>
+
+        <p class="push-hint" data-push-hint hidden></p>
+
+        <ul class="conversation-list" data-conversation-list></ul>
+
+        <div class="empty-state" data-empty-inbox hidden>
+          <svg><use href="#i-chat" /></svg>
+          <p data-empty-text>No conversations yet.</p>
+        </div>
+      </aside>
+
+      <section class="thread-pane" data-thread>
+        <div class="thread-placeholder" data-thread-empty>
+          <div class="placeholder-icon"><svg><use href="#i-chat" /></svg></div>
+          <h2>Pick a conversation</h2>
+          <p class="muted">Messages from your portfolio visitors show up here in real time.</p>
+        </div>
+
+        <div class="thread" data-thread-inner hidden>
+          <header class="thread-header">
+            <button type="button" class="icon-btn back-btn" data-back aria-label="Back to inbox">
+              <svg><use href="#i-back" /></svg>
+            </button>
+            <span class="avatar" data-thread-avatar></span>
+            <div class="thread-title">
+              <h2 data-thread-name></h2>
+              <p class="muted small" data-thread-subtitle></p>
+            </div>
+            <div class="thread-actions">
+              <a class="icon-btn is-whatsapp" data-thread-wa target="_blank" rel="noopener" aria-label="Open WhatsApp" title="WhatsApp">
+                <svg><use href="#i-whatsapp" /></svg>
+              </a>
+              <a class="icon-btn" data-thread-mail aria-label="Send email" title="Email">
+                <svg><use href="#i-mail" /></svg>
+              </a>
+              <button type="button" class="icon-btn" data-details-toggle aria-label="Customer details" title="Customer details">
+                <svg><use href="#i-info" /></svg>
+              </button>
+            </div>
+          </header>
+
+          <ol class="messages" data-messages aria-live="polite"></ol>
+
+          <form class="composer" data-composer>
+            <div class="composer-box">
+              <textarea rows="1" placeholder="Write a reply…" aria-label="Reply" maxlength="2000" data-reply></textarea>
+              <button type="submit" class="send-btn" aria-label="Send">
+                <svg><use href="#i-send" /></svg>
+              </button>
+            </div>
+            <p class="composer-hint muted small">Enter to send · Shift + Enter for a new line</p>
+            <p class="form-error" data-reply-error role="alert"></p>
+          </form>
+        </div>
+      </section>
+
+      <aside class="details-pane" data-details hidden>
+        <header class="details-header">
+          <h2>Customer</h2>
+          <button type="button" class="icon-btn" data-details-close aria-label="Close details">
+            <svg><use href="#i-back" /></svg>
+          </button>
+        </header>
+
+        <div class="profile">
+          <span class="avatar avatar-lg" data-d-avatar></span>
+          <h3 data-d-name></h3>
+          <span class="topic-chip" data-d-topic></span>
+        </div>
+
+        <dl class="facts">
+          <div>
+            <dt><svg><use href="#i-mail" /></svg> Email</dt>
+            <dd><a data-d-email></a></dd>
+          </div>
+          <div>
+            <dt><svg><use href="#i-phone" /></svg> Phone</dt>
+            <dd><a data-d-phone></a></dd>
+          </div>
+          <div>
+            <dt><svg><use href="#i-chat" /></svg> Messages</dt>
+            <dd data-d-count></dd>
+          </div>
+          <div>
+            <dt><svg><use href="#i-inbox" /></svg> First contact</dt>
+            <dd data-d-since></dd>
+          </div>
+        </dl>
+
+        <div class="details-actions">
+          <a class="btn btn-whatsapp btn-block" data-d-wa target="_blank" rel="noopener">
+            <svg><use href="#i-whatsapp" /></svg> Chat on WhatsApp
+          </a>
+          <a class="btn btn-block" data-d-mail>
+            <svg><use href="#i-mail" /></svg> Send email
+          </a>
+          <button type="button" class="btn btn-danger btn-block" data-delete>
+            <svg><use href="#i-trash" /></svg> <span data-delete-label>Delete conversation</span>
+          </button>
+        </div>
+      </aside>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="../assets/js/chat-config.js"></script>
+    <script src="./admin.js"></script>
+  </body>
+</html>

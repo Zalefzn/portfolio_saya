@@ -28,8 +28,12 @@
       property="og:description"
       content="Rizal Fauzan is a passionate Full Stack Developer and Flutter Developer with expertise in React, Vue.js, Laravel, Spring Boot, and mobile app development. View my portfolio, projects, and certificates."
     />
-    <meta property="og:image" content="./assets/images/Rizal Fauzan.png" />
-    <meta property="og:url" content="" />
+    <meta property="og:image" content="https://portfolio-rizal-liart.vercel.app/assets/images/Rizal%20Fauzan.png" />
+    <meta property="og:image:alt" content="Rizal Fauzan" />
+    <meta property="og:url" content="https://portfolio-rizal-liart.vercel.app/" />
+    <meta property="og:site_name" content="Rizal Fauzan Portfolio" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="id_ID" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
@@ -41,10 +45,21 @@
       property="twitter:description"
       content="Rizal Fauzan is a passionate Full Stack Developer and Flutter Developer with expertise in React, Vue.js, Laravel, Spring Boot, and mobile app development. View my portfolio, projects, and certificates."
     />
-    <meta property="twitter:image" content="./assets/images/Rizal Fauzan.png" />
+    <meta property="twitter:image" content="https://portfolio-rizal-liart.vercel.app/assets/images/Rizal%20Fauzan.png" />
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="" />
+    <link rel="canonical" href="https://portfolio-rizal-liart.vercel.app/" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- apply saved theme before paint to avoid a flash -->
+    <script>
+      try {
+        var savedTheme = localStorage.getItem("theme");
+        if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) {}
+    </script>
 
     <!--
     - favicon
@@ -97,7 +112,7 @@
         <div class="sidebar-info">
           <figure class="avatar-box">
             <img
-              src="./assets/images/Rizal Fauzan.png"
+              src="./assets/images/avatar.webp"
               alt="Rizal Fauzan"
               width="80"
             />
@@ -110,7 +125,7 @@
           </div>
 
           <button class="info_more-btn" data-sidebar-btn>
-            <span>Show Contacts</span>
+            <span data-translate="showContacts">Show Contacts</span>
 
             <ion-icon name="chevron-down"></ion-icon>
           </button>
@@ -140,7 +155,7 @@
               </div>
 
               <div class="contact-info">
-                <p class="contact-title">Phone</p>
+                <p class="contact-title" data-translate="phone">Phone</p>
 
                 <a href="tel:+6281290019303" class="contact-link"
                   >+62 812 9001 9303</a
@@ -154,7 +169,7 @@
               </div>
 
               <div class="contact-info">
-                <p class="contact-title">Birthday</p>
+                <p class="contact-title" data-translate="birthday">Birthday</p>
 
                 <time datetime="2000-06-16" id="birthDate">
                   June 16, 2000 <span id="ageText"></span>
@@ -168,12 +183,35 @@
               </div>
 
               <div class="contact-info">
-                <p class="contact-title">Location</p>
+                <p class="contact-title" data-translate="location">Location</p>
 
                 <address>Jakarta, Indonesia</address>
               </div>
             </li>
           </ul>
+
+          <div class="separator"></div>
+
+          <div class="sidebar-actions">
+            <a
+              href="./assets/datas/CV Muhammad Rizal Fauzan.pdf"
+              class="sidebar-btn sidebar-btn-primary"
+              download
+            >
+              <ion-icon name="download-outline"></ion-icon>
+              <span data-translate="downloadCv">Download CV</span>
+            </a>
+
+            <button
+              type="button"
+              class="sidebar-btn"
+              data-nav-link
+              data-page="contact"
+            >
+              <ion-icon name="paper-plane-outline"></ion-icon>
+              <span data-translate="hireMe">Hire Me</span>
+            </button>
+          </div>
 
           <div class="separator"></div>
 
@@ -223,38 +261,47 @@
         <nav class="navbar">
           <ul class="navbar-list">
             <li class="navbar-item">
-              <button class="navbar-link active" data-nav-link data-page="about" data-translate="about">
+              <button class="navbar-link active" data-nav-link data-page="about">
                 <span class="navbar-icon">
                   <ion-icon name="person-outline"></ion-icon>
                 </span>
-                <span class="navbar-text">About</span>
+                <span class="navbar-text" data-translate="about">About</span>
               </button>
             </li>
 
             <li class="navbar-item">
-              <button class="navbar-link" data-nav-link data-page="resume" data-translate="resume">
+              <button class="navbar-link" data-nav-link data-page="resume">
                 <span class="navbar-icon">
                   <ion-icon name="document-text-outline"></ion-icon>
                 </span>
-                <span class="navbar-text">Resume</span>
+                <span class="navbar-text" data-translate="resume">Resume</span>
               </button>
             </li>
 
             <li class="navbar-item">
-              <button class="navbar-link" data-nav-link data-page="portfolio" data-translate="portfolio">
+              <button class="navbar-link" data-nav-link data-page="portfolio">
                 <span class="navbar-icon">
                   <ion-icon name="briefcase-outline"></ion-icon>
                 </span>
-                <span class="navbar-text">Portfolio</span>
+                <span class="navbar-text" data-translate="portfolio">Portfolio</span>
               </button>
             </li>
 
             <li class="navbar-item">
-              <button class="navbar-link" data-nav-link data-page="certificates" data-translate="certificates">
+              <button class="navbar-link" data-nav-link data-page="certificates">
                 <span class="navbar-icon">
                   <ion-icon name="ribbon-outline"></ion-icon>
                 </span>
-                <span class="navbar-text">Certificates</span>
+                <span class="navbar-text" data-translate="certificates">Certificates</span>
+              </button>
+            </li>
+
+            <li class="navbar-item">
+              <button class="navbar-link" data-nav-link data-page="contact">
+                <span class="navbar-icon">
+                  <ion-icon name="mail-outline"></ion-icon>
+                </span>
+                <span class="navbar-text" data-translate="contact">Contact</span>
               </button>
             </li>
           </ul>
@@ -270,7 +317,7 @@
           </header>
 
           <section class="about-text">
-            <p>
+            <p data-translate="aboutP1">
               I'm Rizal Fauzan, a Fullstack Developer who has designed and
               built everything from mobile apps and websites to multi-module
               enterprise systems, including the Prada BC System, DWP
@@ -278,13 +325,13 @@
               Perkasa Group, along with projects spanning insurance, human
               resources, logistics, education, and government sectors.
             </p>
-            <p>
+            <p data-translate="aboutP2">
               With 3 years and 7 months of professional experience, I work
               end-to-end across the full stack, Flutter, React.js, Vue.js,
               Laravel, Nest JS, and Spring Boot, with a consistent track
               record of shipping scalable, stable systems.
             </p>
-            <p>
+            <p data-translate="aboutP3">
               I'm used to handling complex system integrations, optimizing
               application performance, and collaborating across teams to make
               sure technology solutions truly align with business needs. I
@@ -315,7 +362,7 @@
                 <div class="service-content-box">
                   <h4 class="h4 service-item-title" data-translate="webDesign">Web design</h4>
 
-                  <p class="service-item-text">
+                  <p class="service-item-text" data-translate="webDesignText">
                     The most modern and high-quality design made at a
                     professional level.
                   </p>
@@ -334,7 +381,7 @@
                 <div class="service-content-box">
                   <h4 class="h4 service-item-title" data-translate="webDevelopment">Web development</h4>
 
-                  <p class="service-item-text">
+                  <p class="service-item-text" data-translate="webDevelopmentText">
                     High-quality development of sites at the professional level.
                   </p>
                 </div>
@@ -352,7 +399,7 @@
                 <div class="service-content-box">
                   <h4 class="h4 service-item-title" data-translate="mobileApps">Mobile apps</h4>
 
-                  <p class="service-item-text">
+                  <p class="service-item-text" data-translate="mobileAppsText">
                     Professional development of applications for iOS and
                     Android.
                   </p>
@@ -371,7 +418,7 @@
                 <div class="service-content-box">
                   <h4 class="h4 service-item-title" data-translate="uiuxDesign">UI/UX Design</h4>
 
-                  <p class="service-item-text">
+                  <p class="service-item-text" data-translate="uiuxDesignText">
                     Creating beautiful and intuitive user interfaces and
                     experiences for web and mobile applications.
                   </p>
@@ -390,7 +437,7 @@
                 <div class="service-content-box">
                   <h4 class="h4 service-item-title" data-translate="analysis">Analysis</h4>
 
-                  <p class="service-item-text">
+                  <p class="service-item-text" data-translate="analysisText">
                     Analyzing business needs, requirements, and data to create
                     effective solutions.
                   </p>
@@ -409,7 +456,7 @@
                 <div class="service-content-box">
                   <h4 class="h4 service-item-title" data-translate="management">Management</h4>
 
-                  <p class="service-item-text">
+                  <p class="service-item-text" data-translate="managementText">
                     Managing projects and coordinating cross-functional teams to
                     achieve organizational goals.
                   </p>
@@ -428,73 +475,135 @@
             <ul class="fun-facts-list">
               <li class="fun-facts-item">
                 <div class="content-card">
-                  <h4 class="h4 fun-facts-item-title">🤖 AI & ML Enthusiast</h4>
+                  <h4 class="h4 fun-facts-item-title" data-i18n-id="🤖 Penggemar AI &amp; ML">🤖 AI &amp; ML Enthusiast</h4>
                 </div>
               </li>
 
               <li class="fun-facts-item">
                 <div class="content-card">
-                  <h4 class="h4 fun-facts-item-title">📚 Reading Tech Books</h4>
+                  <h4 class="h4 fun-facts-item-title" data-i18n-id="📚 Membaca Buku Teknologi">📚 Reading Tech Books</h4>
                 </div>
               </li>
 
               <li class="fun-facts-item">
                 <div class="content-card">
-                  <h4 class="h4 fun-facts-item-title">🎬 Sci-Fi Movie Fan</h4>
+                  <h4 class="h4 fun-facts-item-title" data-i18n-id="🎬 Penggemar Film Sci-Fi">🎬 Sci-Fi Movie Fan</h4>
                 </div>
               </li>
 
               <li class="fun-facts-item">
                 <div class="content-card">
-                  <h4 class="h4 fun-facts-item-title">⚽ Soccer Lover</h4>
+                  <h4 class="h4 fun-facts-item-title" data-i18n-id="⚽ Pencinta Sepak Bola">⚽ Soccer Lover</h4>
                 </div>
               </li>
 
               <li class="fun-facts-item">
                 <div class="content-card">
-                  <h4 class="h4 fun-facts-item-title">� Food Explorer</h4>
+                  <h4 class="h4 fun-facts-item-title" data-i18n-id="🍜 Penjelajah Kuliner">🍜 Food Explorer</h4>
                 </div>
               </li>
 
               <li class="fun-facts-item">
                 <div class="content-card">
-                  <h4 class="h4 fun-facts-item-title">💻 Open Source Fan</h4>
+                  <h4 class="h4 fun-facts-item-title" data-i18n-id="💻 Penggemar Open Source">💻 Open Source Fan</h4>
                 </div>
               </li>
 
               <li class="fun-facts-item">
                 <div class="content-card">
-                  <h4 class="h4 fun-facts-item-title">
-                    � Learning New Languages
-                  </h4>
+                  <h4 class="h4 fun-facts-item-title" data-i18n-id="🌏 Belajar Bahasa Baru">🌏 Learning New Languages</h4>
                 </div>
               </li>
 
               <li class="fun-facts-item">
                 <div class="content-card">
-                  <h4 class="h4 fun-facts-item-title">� Coding with Lo-Fi</h4>
+                  <h4 class="h4 fun-facts-item-title" data-i18n-id="🎧 Ngoding sambil Lo-Fi">🎧 Coding with Lo-Fi</h4>
                 </div>
               </li>
 
               <li class="fun-facts-item">
                 <div class="content-card">
-                  <h4 class="h4 fun-facts-item-title">
-                    📱 Mobile Tech Collector
-                  </h4>
+                  <h4 class="h4 fun-facts-item-title" data-i18n-id="📱 Kolektor Gadget Mobile">📱 Mobile Tech Collector</h4>
                 </div>
               </li>
 
               <li class="fun-facts-item">
                 <div class="content-card">
-                  <h4 class="h4 fun-facts-item-title">☕ Coffee & Code Pair</h4>
+                  <h4 class="h4 fun-facts-item-title" data-i18n-id="☕ Kopi &amp; Kode">☕ Coffee &amp; Code Pair</h4>
                 </div>
               </li>
 
               <li class="fun-facts-item">
                 <div class="content-card">
-                  <h4 class="h4 fun-facts-item-title">🎮 Indie Game Dev</h4>
+                  <h4 class="h4 fun-facts-item-title" data-i18n-id="🎮 Pengembang Game Indie">🎮 Indie Game Dev</h4>
                 </div>
               </li>
+            </ul>
+          </section>
+
+          <!--
+          - github stats (filled by script.js from the GitHub API)
+        -->
+
+          <section class="github-stats" data-github-stats data-github-user="Zalefzn">
+            <div class="certificates-title-wrapper">
+              <h3 class="h3" data-translate="githubActivity">GitHub Activity</h3>
+
+              <a
+                href="https://github.com/Zalefzn"
+                class="see-more-btn"
+                target="_blank"
+                rel="noopener"
+              >
+                <span data-translate="viewProfile">View Profile</span>
+                <ion-icon name="logo-github"></ion-icon>
+              </a>
+            </div>
+
+            <ul class="github-stats-list">
+              <li class="content-card github-stat">
+                <data class="github-stat-value" data-github-repos>–</data>
+                <p class="github-stat-label" data-translate="publicRepos">Public repos</p>
+              </li>
+              <li class="content-card github-stat">
+                <data class="github-stat-value" data-github-followers>–</data>
+                <p class="github-stat-label" data-translate="followers">Followers</p>
+              </li>
+              <li class="content-card github-stat">
+                <data class="github-stat-value" data-github-stars>–</data>
+                <p class="github-stat-label" data-translate="stars">Stars</p>
+              </li>
+            </ul>
+
+            <div class="github-langs" data-github-langs hidden>
+              <p class="github-langs-title" data-translate="topLanguages">Top languages</p>
+              <div class="github-langs-bar" data-github-langs-bar></div>
+              <ul class="github-langs-legend" data-github-langs-legend></ul>
+            </div>
+          </section>
+
+          <!--
+          - testimonials: add real client quotes as <li> items below and the
+          - section shows itself automatically (it stays hidden while empty)
+        -->
+
+          <section class="testimonials" data-testimonials hidden>
+            <h3 class="h3 testimonials-title" data-translate="testimonials">Testimonials</h3>
+
+            <ul class="testimonials-list has-scrollbar">
+              <!--
+              <li class="testimonials-item">
+                <div class="content-card" data-testimonials-item>
+                  <figure class="testimonials-avatar-box">
+                    <img src="./assets/images/icon-quote.svg" alt="Client name" width="60" data-testimonials-avatar />
+                  </figure>
+                  <h4 class="h4 testimonials-item-title" data-testimonials-title>Client name, Company</h4>
+                  <div class="testimonials-text" data-testimonials-text>
+                    <p>What the client said about working with you.</p>
+                  </div>
+                </div>
+              </li>
+              -->
             </ul>
           </section>
 
@@ -504,7 +613,7 @@
 
           <section class="certificates">
             <div class="certificates-title-wrapper">
-              <h3 class="h3 certificates-title">Certificates</h3>
+              <h3 class="h3 certificates-title" data-translate="certificates">Certificates</h3>
 
               <button
                 type="button"
@@ -512,7 +621,7 @@
                 data-nav-link
                 data-page="certificates"
               >
-                See More
+                <span data-translate="seeMore">See More</span>
                 <ion-icon name="arrow-forward-outline"></ion-icon>
               </button>
             </div>
@@ -580,6 +689,28 @@
               </li>
             </ul>
           </section>
+
+          <div class="modal-container" data-modal-container>
+            <div class="overlay" data-overlay></div>
+
+            <section class="testimonials-modal">
+              <button class="modal-close-btn" data-modal-close-btn aria-label="Close">
+                <ion-icon name="close-outline"></ion-icon>
+              </button>
+
+              <div class="modal-img-wrapper">
+                <figure class="modal-avatar-box">
+                  <img src="./assets/images/icon-quote.svg" alt="" width="80" data-modal-img />
+                </figure>
+                <img src="./assets/images/icon-quote.svg" alt="quote icon" />
+              </div>
+
+              <div class="modal-content">
+                <h4 class="h3 modal-title" data-modal-title></h4>
+                <div data-modal-text></div>
+              </div>
+            </section>
+          </div>
         </article>
 
         <!--
@@ -588,38 +719,15 @@
 
         <article class="resume" data-page="resume">
           <header>
-            <div
-              style="
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                flex-wrap: wrap;
-                gap: 15px;
-                margin-bottom: 20px;
-              "
-            >
-              <h2 class="h2 article-title">Resume</h2>
+            <div class="article-header">
+              <h2 class="h2 article-title" data-translate="resume">Resume</h2>
               <a
                 href="./assets/datas/CV Muhammad Rizal Fauzan.pdf"
                 download
-                style="
-                  color: hsl(210, 100%, 60%);
-                  text-decoration: none;
-                  display: flex;
-                  align-items: center;
-                  gap: 8px;
-                  font-size: 16px;
-                  padding: 10px 20px;
-                  background: hsl(0, 0%, 97%);
-                  border: 1px solid hsl(0, 0%, 90%);
-                  border-radius: 12px;
-                  transition: 0.3s ease;
-                  z-index: 1;
-                  box-shadow: 0 2px 8px hsla(0, 0%, 0%, 0.05);
-                "
+                class="download-btn"
               >
                 <ion-icon name="download-outline"></ion-icon>
-                Download CV
+                <span data-translate="downloadCv">Download CV</span>
               </a>
             </div>
           </header>
@@ -630,7 +738,7 @@
                 <ion-icon name="book-outline"></ion-icon>
               </div>
 
-              <h3 class="h3">Education</h3>
+              <h3 class="h3" data-translate="education">Education</h3>
             </div>
 
             <ol class="timeline-list">
@@ -639,7 +747,7 @@
 
                 <span>2017 — 2019</span>
 
-                <p class="timeline-text">
+                <p class="timeline-text" data-i18n-id="Jurusan Multimedia, dengan fokus pada pengembangan desain web, desain UI/UX, dan sinematografi.">
                   Majoring in Multimedia, with a focus on web design
                   development, UI/UX Design, and cinematography.
                 </p>
@@ -650,7 +758,7 @@
 
                 <span>2019 — 2021</span>
 
-                <p class="timeline-text">
+                <p class="timeline-text" data-i18n-id="Jurusan Bisnis Digital, dengan fokus pada pemasaran digital, bisnis, dan teknologi.">
                   Majoring in Digital Business, focusing on digital marketing,
                   business, and technology.
                 </p>
@@ -661,7 +769,7 @@
 
                 <span>2022 — 2026</span>
 
-                <p class="timeline-text">
+                <p class="timeline-text" data-i18n-id="Jurusan Sistem Informasi, dengan fokus pada pemrograman dan analisis sistem.">
                   Majoring in Information Systems, focusing on programming and
                   system analysis.
                 </p>
@@ -675,43 +783,43 @@
                 <ion-icon name="book-outline"></ion-icon>
               </div>
 
-              <h3 class="h3">Work Experiences (3 years 7 months)</h3>
+              <h3 class="h3" data-translate="workExperience">Work Experiences (3 years 7 months)</h3>
             </div>
 
             <ol class="timeline-list">
               <li class="timeline-item">
-                <h4 class="h4 timeline-item-title">
+                <h4 class="h4 timeline-item-title" data-i18n-id="Fullstack Developer di PT Ardana Perkasa Group">
                   Fullstack Developer at PT Ardana Perkasa Group
                 </h4>
 
-                <span>November 2025 — Present (11 months)</span>
+                <span data-i18n-id="November 2025 — Sekarang (11 bulan)">November 2025 — Present (11 months)</span>
 
                 <ul class="timeline-text-list">
-                  <li>
+                  <li data-i18n-id="Mengembangkan dan memelihara beberapa sistem enterprise: Prada BC System, DWP Assurance, Caraka Broker, Sistem Inventaris, HRIS, dan Finance System.">
                     Developing and maintaining several enterprise systems:
                     Prada BC System, DWP Assurance, Caraka Broker, Inventory
                     System, HRIS, and Finance System.
                   </li>
-                  <li>
+                  <li data-i18n-id="Membangun frontend dengan React.js &amp; Vue.js, serta backend dengan Laravel &amp; Spring Boot.">
                     Building frontends with React.js & Vue.js, and backends
                     with Laravel & Spring Boot.
                   </li>
-                  <li>
+                  <li data-i18n-id="Memastikan integrasi, skalabilitas, dan performa di seluruh platform.">
                     Ensuring integration, scalability, and performance across
                     platforms.
                   </li>
-                  <li>
+                  <li data-i18n-id="Merancang REST API dan struktur database untuk mendukung kebutuhan modul di seluruh perusahaan.">
                     Designing REST APIs and database structures to support
                     enterprise-wide module needs.
                   </li>
-                  <li>
+                  <li data-i18n-id="Berkoordinasi dengan tim produk dan QA dalam deployment serta pemeliharaan sistem yang sudah berjalan.">
                     Coordinating with the product and QA teams on deployment
                     and maintenance of live systems.
                   </li>
                 </ul>
 
                 <div class="experience-skills">
-                  <span class="experience-skills-label">Skills:</span>
+                  <span class="experience-skills-label" data-i18n-id="Keahlian:">Skills:</span>
                   <span class="experience-skill-tag">React JS</span>
                   <span class="experience-skill-tag">Vue.js</span>
                   <span class="experience-skill-tag">Laravel</span>
@@ -721,37 +829,37 @@
               </li>
 
               <li class="timeline-item">
-                <h4 class="h4 timeline-item-title">
+                <h4 class="h4 timeline-item-title" data-i18n-id="Fullstack Developer di Digivise Indonesia">
                   Fullstack Developer at Digivise Indonesia
                 </h4>
 
-                <span>September 2024 — October 2025 (1 year 2 months)</span>
+                <span data-i18n-id="September 2024 — Oktober 2025 (1 tahun 2 bulan)">September 2024 — October 2025 (1 year 2 months)</span>
 
                 <ul class="timeline-text-list">
-                  <li>
+                  <li data-i18n-id="Mengembangkan dan memelihara Human Resource Management System (HRMS) menggunakan React.js, Nest JS &amp; Laravel.">
                     Developing and maintaining a Human Resource Management
                     System (HRMS) using React.js, Nest JS & Laravel.
                   </li>
-                  <li>
+                  <li data-i18n-id="Membangun fitur manajemen karyawan, absensi, penggajian, dan pelaporan.">
                     Building employee management, attendance, payroll, and
                     reporting features.
                   </li>
-                  <li>
+                  <li data-i18n-id="Merancang skema database untuk data karyawan, absensi, dan penggajian.">
                     Designing the database schema for employee, attendance,
                     and payroll data.
                   </li>
-                  <li>
+                  <li data-i18n-id="Mengimplementasikan sistem perhitungan gaji otomatis berdasarkan data absensi.">
                     Implementing an automatic payroll calculation system based
                     on attendance data.
                   </li>
-                  <li>
+                  <li data-i18n-id="Melakukan pengujian menyeluruh sebelum merilis fitur baru ke production.">
                     Conducting thorough testing before releasing new features
                     to production.
                   </li>
                 </ul>
 
                 <div class="experience-skills">
-                  <span class="experience-skills-label">Skills:</span>
+                  <span class="experience-skills-label" data-i18n-id="Keahlian:">Skills:</span>
                   <span class="experience-skill-tag">React JS</span>
                   <span class="experience-skill-tag">Laravel</span>
                   <span class="experience-skill-tag">Nest JS</span>
@@ -759,38 +867,38 @@
               </li>
 
               <li class="timeline-item">
-                <h4 class="h4 timeline-item-title">
+                <h4 class="h4 timeline-item-title" data-i18n-id="Fullstack Developer di PT Asuransi Jasa Tania">
                   Fullstack Developer at PT Asuransi Jasa Tania
                 </h4>
 
-                <span>April 2024 — August 2024 (5 months)</span>
+                <span data-i18n-id="April 2024 — Agustus 2024 (5 bulan)">April 2024 — August 2024 (5 months)</span>
 
                 <ul class="timeline-text-list">
-                  <li>
+                  <li data-i18n-id="Mengembangkan dan memelihara aplikasi internal, termasuk Sistem Manajemen Blanko dan Sistem Klaim Asuransi.">
                     Developing and maintaining internal applications,
                     including a Blanko Management System and an Insurance
                     Claim System.
                   </li>
-                  <li>
+                  <li data-i18n-id="Menerapkan pengembangan fullstack menggunakan Laravel (backend) dan React.js (frontend).">
                     Implementing fullstack development using Laravel
                     (backend) and React.js (frontend).
                   </li>
-                  <li>
+                  <li data-i18n-id="Merancang alur pengajuan dan verifikasi klaim agar lebih efisien dan mudah dilacak.">
                     Designing the claim submission and verification flow to
                     be more efficient and easier to track.
                   </li>
-                  <li>
+                  <li data-i18n-id="Membangun sistem role &amp; permission untuk membatasi akses berdasarkan divisi pengguna.">
                     Building a role & permission system to restrict access by
                     user division.
                   </li>
-                  <li>
+                  <li data-i18n-id="Melakukan pemeliharaan rutin dan perbaikan bug pada aplikasi yang sudah berjalan.">
                     Performing routine maintenance and bug fixes on the live
                     application.
                   </li>
                 </ul>
 
                 <div class="experience-skills">
-                  <span class="experience-skills-label">Skills:</span>
+                  <span class="experience-skills-label" data-i18n-id="Keahlian:">Skills:</span>
                   <span class="experience-skill-tag">React JS</span>
                   <span class="experience-skill-tag">Laravel</span>
                   <span class="experience-skill-tag">API Integration</span>
@@ -798,37 +906,37 @@
               </li>
 
               <li class="timeline-item">
-                <h4 class="h4 timeline-item-title">
+                <h4 class="h4 timeline-item-title" data-i18n-id="Fullstack Developer di Opticore Indonesia">
                   Fullstack Developer at Opticore Indonesia
                 </h4>
 
-                <span>March 2023 — March 2024 (1 year 1 month)</span>
+                <span data-i18n-id="Maret 2023 — Maret 2024 (1 tahun 1 bulan)">March 2023 — March 2024 (1 year 1 month)</span>
 
                 <ul class="timeline-text-list">
-                  <li>
+                  <li data-i18n-id="Mengembangkan dan memelihara sistem pelacakan berbasis Flutter (mobile) dan web.">
                     Developing and maintaining a Flutter-based (mobile) and
                     web tracking system.
                   </li>
-                  <li>
+                  <li data-i18n-id="Membangun fitur pelacakan real-time, monitoring data, dan pelaporan.">
                     Building real-time tracking, data monitoring, and
                     reporting features.
                   </li>
-                  <li>
+                  <li data-i18n-id="Mengintegrasikan layanan lokasi (GPS) untuk pelacakan posisi real-time di aplikasi mobile.">
                     Integrating location services (GPS) for real-time
                     position tracking in the mobile app.
                   </li>
-                  <li>
+                  <li data-i18n-id="Membangun dashboard web dengan React JS untuk memantau data dari perangkat di lapangan.">
                     Building a web dashboard with React JS to monitor data
                     from field devices.
                   </li>
-                  <li>
+                  <li data-i18n-id="Mengembangkan backend dengan Java Spring Boot untuk menangani data pelacakan dalam jumlah besar.">
                     Developing the backend with Java Spring Boot to handle
                     large volumes of tracking data.
                   </li>
                 </ul>
 
                 <div class="experience-skills">
-                  <span class="experience-skills-label">Skills:</span>
+                  <span class="experience-skills-label" data-i18n-id="Keahlian:">Skills:</span>
                   <span class="experience-skill-tag">Flutter</span>
                   <span class="experience-skill-tag">Dart</span>
                   <span class="experience-skill-tag">JavaScript</span>
@@ -838,73 +946,73 @@
               </li>
 
               <li class="timeline-item">
-                <h4 class="h4 timeline-item-title">
+                <h4 class="h4 timeline-item-title" data-i18n-id="Flutter Developer di IIA Indonesia">
                   Flutter Developer at IIA Indonesia
                 </h4>
 
-                <span>November 2022 — February 2023 (4 months)</span>
+                <span data-i18n-id="November 2022 — Februari 2023 (4 bulan)">November 2022 — February 2023 (4 months)</span>
 
                 <ul class="timeline-text-list">
-                  <li>
+                  <li data-i18n-id="Mengembangkan aplikasi mobile untuk penjadwalan seminar internasional (manajemen acara, penjadwalan, data peserta).">
                     Developing a mobile app for scheduling international
                     seminars (event management, scheduling, participant
                     data).
                   </li>
-                  <li>
+                  <li data-i18n-id="Membangun fitur pendaftaran dan manajemen data peserta.">
                     Building registration and participant data management
                     features.
                   </li>
-                  <li>
+                  <li data-i18n-id="Merancang tampilan jadwal acara yang mudah dipahami oleh peserta dari berbagai negara.">
                     Designing an event schedule view that's easy to
                     understand for participants from different countries.
                   </li>
-                  <li>
+                  <li data-i18n-id="Mengintegrasikan notifikasi pengingat untuk jadwal sesi seminar.">
                     Integrating reminder notifications for seminar session
                     schedules.
                   </li>
-                  <li>
+                  <li data-i18n-id="Menguji aplikasi di berbagai perangkat sebelum setiap acara.">
                     Testing the app on various devices before each event.
                   </li>
                 </ul>
 
                 <div class="experience-skills">
-                  <span class="experience-skills-label">Skills:</span>
+                  <span class="experience-skills-label" data-i18n-id="Keahlian:">Skills:</span>
                   <span class="experience-skill-tag">Flutter</span>
                   <span class="experience-skill-tag">Dart</span>
                 </div>
               </li>
 
               <li class="timeline-item">
-                <h4 class="h4 timeline-item-title">
+                <h4 class="h4 timeline-item-title" data-i18n-id="Project Manager di PT Telkom Akses Indonesia">
                   Project Manager at PT Telkom Akses Indonesia
                 </h4>
 
-                <span>June 2022 — October 2022 (5 months)</span>
+                <span data-i18n-id="Juni 2022 — Oktober 2022 (5 bulan)">June 2022 — October 2022 (5 months)</span>
 
                 <ul class="timeline-text-list">
-                  <li>
+                  <li data-i18n-id="Memimpin pengembangan aplikasi internal Super Hana versi 2.0.">
                     Leading development of the internal Super Hana
                     Application version 2.0.
                   </li>
-                  <li>
+                  <li data-i18n-id="Mengoordinasikan tim lintas fungsi untuk memastikan target dan jadwal proyek tercapai.">
                     Coordinating cross-functional teams to ensure project
                     timelines and goals were met.
                   </li>
-                  <li>
+                  <li data-i18n-id="Merencanakan pekerjaan dan membagi tugas menggunakan Jira dan Trello.">
                     Planning work and assigning tasks using Jira and Trello.
                   </li>
-                  <li>
+                  <li data-i18n-id="Memantau progres pengembangan dan melaporkan status proyek kepada stakeholder.">
                     Monitoring development progress and reporting project
                     status to stakeholders.
                   </li>
-                  <li>
+                  <li data-i18n-id="Mengidentifikasi risiko proyek dan menyusun langkah mitigasi agar jadwal tetap sesuai rencana.">
                     Identifying project risks and defining mitigation steps
                     to keep timelines on track.
                   </li>
                 </ul>
 
                 <div class="experience-skills">
-                  <span class="experience-skills-label">Skills:</span>
+                  <span class="experience-skills-label" data-i18n-id="Keahlian:">Skills:</span>
                   <span class="experience-skill-tag">Jira</span>
                   <span class="experience-skill-tag">Trello</span>
                   <span class="experience-skill-tag">Project Planning & Scheduling</span>
@@ -913,74 +1021,74 @@
               </li>
 
               <li class="timeline-item">
-                <h4 class="h4 timeline-item-title">
+                <h4 class="h4 timeline-item-title" data-i18n-id="Flutter Developer di Microteam Mediatama Indonesia">
                   Flutter Developer at Microteam Mediatama Indonesia
                 </h4>
 
-                <span>January 2022 — May 2022 (5 months)</span>
+                <span data-i18n-id="Januari 2022 — Mei 2022 (5 bulan)">January 2022 — May 2022 (5 months)</span>
 
                 <ul class="timeline-text-list">
-                  <li>
+                  <li data-i18n-id="Mengembangkan aplikasi mobile untuk mencatat dan mengelola aktivitas petugas keamanan, termasuk penjaga dan satpam (absensi, log aktivitas, pelaporan).">
                     Developing a mobile app for recording and managing
                     security personnel activities, including guards and
                     satpam (attendance, activity logs, reporting).
                   </li>
-                  <li>
+                  <li data-i18n-id="Membangun fitur absensi berbasis lokasi untuk petugas keamanan di lapangan.">
                     Building location-based attendance features for field
                     security personnel.
                   </li>
-                  <li>
+                  <li data-i18n-id="Merancang fitur log aktivitas harian digital.">
                     Designing a digital daily activity log feature.
                   </li>
-                  <li>
+                  <li data-i18n-id="Membangun modul pelaporan yang dapat diakses supervisor secara real-time.">
                     Building a reporting module accessible to supervisors in
                     real time.
                   </li>
-                  <li>
+                  <li data-i18n-id="Menguji aplikasi langsung bersama tim lapangan untuk memastikan kemudahan penggunaan.">
                     Testing the app directly with the field team to ensure
                     ease of use.
                   </li>
                 </ul>
 
                 <div class="experience-skills">
-                  <span class="experience-skills-label">Skills:</span>
+                  <span class="experience-skills-label" data-i18n-id="Keahlian:">Skills:</span>
                   <span class="experience-skill-tag">Flutter</span>
                   <span class="experience-skill-tag">Dart</span>
                 </div>
               </li>
 
               <li class="timeline-item">
-                <h4 class="h4 timeline-item-title">
+                <h4 class="h4 timeline-item-title" data-i18n-id="Flutter Developer di PT Dimy Indonesia">
                   Flutter Developer at PT Dimy Indonesia
                 </h4>
 
-                <span>July 2021 — December 2021 (6 months)</span>
+                <span data-i18n-id="Juli 2021 — Desember 2021 (6 bulan)">July 2021 — December 2021 (6 months)</span>
 
                 <ul class="timeline-text-list">
-                  <li>
+                  <li data-i18n-id="Mengembangkan dan memelihara aplikasi mobile POS untuk operasional harian kafe (manajemen pesanan, pembayaran, riwayat transaksi).">
                     Developing and maintaining a POS mobile app for daily
                     cafe operations (order management, payments, transaction
                     history).
                   </li>
-                  <li>
+                  <li data-i18n-id="Membangun fitur manajemen menu dan stok bahan baku.">
                     Building menu and raw material stock management features.
                   </li>
-                  <li>
+                  <li data-i18n-id="Mengimplementasikan sistem pembayaran dan pencetakan struk transaksi.">
                     Implementing a payment system and transaction receipt
                     printing.
                   </li>
-                  <li>
+                  <li data-i18n-id="Merancang fitur riwayat transaksi untuk mempermudah rekap penjualan harian.">
                     Designing a transaction history feature to simplify
                     daily sales recaps.
                   </li>
-                  <li>
+                  <li data-i18n-id="Memperbaiki bug dan menyesuaikan fitur berdasarkan masukan pengguna di lapangan.">
                     Fixing bugs and adjusting features based on field user
                     feedback.
                   </li>
                 </ul>
 
                 <div class="experience-skills">
-                  <span class="experience-skills-label">Skills:</span>
+                  <span class="experience-skills-label" data-i18n-id="Keahlian:">Skills:</span>
                   <span class="experience-skill-tag">Flutter</span>
                   <span class="experience-skill-tag">Dart</span>
                 </div>
@@ -994,7 +1102,7 @@
                 <ion-icon name="briefcase-outline"></ion-icon>
               </div>
 
-              <h3 class="h3">Freelance Projects</h3>
+              <h3 class="h3" data-translate="freelanceProjects">Freelance Projects</h3>
             </div>
 
             <ol class="timeline-list">
@@ -1006,30 +1114,30 @@
                 <span>Dinas Mimika Papua</span>
 
                 <ul class="timeline-text-list">
-                  <li>
+                  <li data-i18n-id="Mengembangkan aplikasi ketahanan pangan menggunakan Vue.js, mencakup dashboard dan landing page.">
                     Developing a food security application using Vue.js,
                     including both dashboard and landing page.
                   </li>
-                  <li>
+                  <li data-i18n-id="Mengintegrasikan frontend dengan API yang disediakan tim backend.">
                     Integrating the frontend with APIs provided by the
                     backend team.
                   </li>
-                  <li>
+                  <li data-i18n-id="Merancang UI yang responsif dan mudah digunakan untuk kebutuhan instansi pemerintah.">
                     Designing a responsive, easy-to-use UI for government
                     agency needs.
                   </li>
-                  <li>
+                  <li data-i18n-id="Memvisualisasikan data ketahanan pangan dalam bentuk grafik dan tabel di dashboard.">
                     Visualizing food security data as charts and tables on
                     the dashboard.
                   </li>
-                  <li>
+                  <li data-i18n-id="Menguji dan memperbaiki bug sebelum aplikasi dirilis ke pengguna.">
                     Testing and fixing bugs before the app was released to
                     users.
                   </li>
                 </ul>
 
                 <div class="experience-skills">
-                  <span class="experience-skills-label">Skills:</span>
+                  <span class="experience-skills-label" data-i18n-id="Keahlian:">Skills:</span>
                   <span class="experience-skill-tag">Vue.js</span>
                   <span class="experience-skill-tag">JavaScript</span>
                   <span class="experience-skill-tag">API Integration</span>
@@ -1045,26 +1153,26 @@
                 <span>PT Abadi Elektrindo</span>
 
                 <ul class="timeline-text-list">
-                  <li>
+                  <li data-i18n-id="Mengembangkan website company profile dengan HTML, CSS, dan JavaScript, termasuk optimasi SEO.">
                     Developing a company profile website with HTML, CSS, and
                     JavaScript, including SEO optimization.
                   </li>
-                  <li>
+                  <li data-i18n-id="Merancang struktur halaman dan tata letak visual yang sesuai dengan identitas perusahaan.">
                     Designing the page structure and visual layout to match
                     the company's identity.
                   </li>
-                  <li>
+                  <li data-i18n-id="Menerapkan desain responsif agar nyaman diakses dari desktop maupun mobile.">
                     Implementing a responsive design for comfortable access
                     from desktop and mobile.
                   </li>
-                  <li>
+                  <li data-i18n-id="Melakukan optimasi SEO on-page seperti meta tag, struktur heading, dan kecepatan muat halaman.">
                     Performing on-page SEO optimization such as meta tags,
                     heading structure, and page load speed.
                   </li>
                 </ul>
 
                 <div class="experience-skills">
-                  <span class="experience-skills-label">Skills:</span>
+                  <span class="experience-skills-label" data-i18n-id="Keahlian:">Skills:</span>
                   <span class="experience-skill-tag">HTML</span>
                   <span class="experience-skill-tag">CSS</span>
                   <span class="experience-skill-tag">JS Native</span>
@@ -1077,29 +1185,29 @@
                   Frontend Developer (Freelance)
                 </h4>
 
-                <span>Car Showroom</span>
+                <span data-i18n-id="Showroom Mobil">Car Showroom</span>
 
                 <ul class="timeline-text-list">
-                  <li>
+                  <li data-i18n-id="Mengembangkan website responsif untuk showroom mobil: daftar kendaraan, halaman detail, dan formulir kontak.">
                     Developing a responsive website for a car showroom:
                     vehicle listings, detail pages, and a contact form.
                   </li>
-                  <li>
+                  <li data-i18n-id="Membangun halaman katalog kendaraan dengan filter berdasarkan kategori dan harga.">
                     Building a vehicle catalog page with filtering by
                     category and price.
                   </li>
-                  <li>
+                  <li data-i18n-id="Merancang halaman detail kendaraan yang menampilkan spesifikasi dan galeri foto.">
                     Designing a vehicle detail page showing specifications
                     and a photo gallery.
                   </li>
-                  <li>
+                  <li data-i18n-id="Mengimplementasikan formulir kontak agar calon pembeli lebih mudah menghubungi showroom.">
                     Implementing a contact form to make it easier for
                     prospective buyers to reach the showroom.
                   </li>
                 </ul>
 
                 <div class="experience-skills">
-                  <span class="experience-skills-label">Skills:</span>
+                  <span class="experience-skills-label" data-i18n-id="Keahlian:">Skills:</span>
                   <span class="experience-skill-tag">React JS</span>
                   <span class="experience-skill-tag">Tailwind CSS</span>
                   <span class="experience-skill-tag">Laravel</span>
@@ -1114,31 +1222,31 @@
                 <span>Kampung Tugu, Jakarta Utara</span>
 
                 <ul class="timeline-text-list">
-                  <li>
+                  <li data-i18n-id="Mengembangkan website profil Kampung Tugu, kawasan bersejarah di Jakarta Utara, untuk mendukung promosi budaya dan wisata lokal.">
                     Developing a profile website for Kampung Tugu, a
                     historic area in North Jakarta, to support local
                     cultural and tourism promotion.
                   </li>
-                  <li>
+                  <li data-i18n-id="Merancang halaman yang menampilkan sejarah, budaya, dan kegiatan masyarakat Kampung Tugu.">
                     Designing pages showcasing the history, culture, and
                     community activities of Kampung Tugu.
                   </li>
-                  <li>
+                  <li data-i18n-id="Membangun galeri foto dan video untuk menampilkan acara dan warisan lokal, termasuk musik Keroncong Tugu.">
                     Building a photo and video gallery to showcase events and
                     local heritage, including Keroncong Tugu music.
                   </li>
-                  <li>
+                  <li data-i18n-id="Menerapkan desain responsif agar website mudah diakses wisatawan melalui perangkat mobile.">
                     Implementing a responsive design so the website is
                     easily accessible to tourists on mobile devices.
                   </li>
-                  <li>
+                  <li data-i18n-id="Mengoptimalkan SEO agar website lebih mudah ditemukan di mesin pencari.">
                     Optimizing SEO so the website is easier to find on
                     search engines.
                   </li>
                 </ul>
 
                 <div class="experience-skills">
-                  <span class="experience-skills-label">Skills:</span>
+                  <span class="experience-skills-label" data-i18n-id="Keahlian:">Skills:</span>
                   <span class="experience-skill-tag">HTML</span>
                   <span class="experience-skill-tag">CSS</span>
                   <span class="experience-skill-tag">JavaScript</span>
@@ -1154,26 +1262,26 @@
                 <span>SD Alihsan Islamic School</span>
 
                 <ul class="timeline-text-list">
-                  <li>
+                  <li data-i18n-id="Mengembangkan website sekolah dengan Content Management System (CMS) untuk SD Alihsan Islamic School.">
                     Developing a school website with a Content Management
                     System (CMS) for SD Alihsan Islamic School.
                   </li>
-                  <li>
+                  <li data-i18n-id="Membangun fitur CMS agar sekolah dapat mengelola berita, pengumuman, dan galeri kegiatan secara mandiri.">
                     Building CMS features so the school can independently
                     manage news, announcements, and activity galleries.
                   </li>
-                  <li>
+                  <li data-i18n-id="Merancang halaman profil sekolah, kurikulum, dan pendaftaran peserta didik baru (PPDB).">
                     Designing the school profile, curriculum, and new student
                     registration (PPDB) pages.
                   </li>
-                  <li>
+                  <li data-i18n-id="Mengimplementasikan sistem login admin untuk mengatur hak akses konten.">
                     Implementing an admin login system to manage content
                     access rights.
                   </li>
                 </ul>
 
                 <div class="experience-skills">
-                  <span class="experience-skills-label">Skills:</span>
+                  <span class="experience-skills-label" data-i18n-id="Keahlian:">Skills:</span>
                   <span class="experience-skill-tag">Laravel</span>
                   <span class="experience-skill-tag">JavaScript</span>
                   <span class="experience-skill-tag">HTML</span>
@@ -1190,26 +1298,26 @@
                 <span>Fukumaru Travel</span>
 
                 <ul class="timeline-text-list">
-                  <li>
+                  <li data-i18n-id="Mengembangkan website untuk Fukumaru Travel, sebuah agen perjalanan, untuk mendukung pemasaran paket wisata secara online.">
                     Developing a website for Fukumaru Travel, a travel
                     agency, to support online marketing of tour packages.
                   </li>
-                  <li>
+                  <li data-i18n-id="Membangun halaman katalog paket wisata lengkap dengan detail destinasi, harga, dan itinerary.">
                     Building a tour package catalog page complete with
                     destination details, pricing, and itinerary.
                   </li>
-                  <li>
+                  <li data-i18n-id="Merancang fitur pencarian dan filter paket wisata berdasarkan destinasi dan anggaran.">
                     Designing search and filter features for tour packages
                     by destination and budget.
                   </li>
-                  <li>
+                  <li data-i18n-id="Mengimplementasikan formulir pemesanan paket wisata online untuk calon pelanggan.">
                     Implementing an online tour package booking form for
                     prospective customers.
                   </li>
                 </ul>
 
                 <div class="experience-skills">
-                  <span class="experience-skills-label">Skills:</span>
+                  <span class="experience-skills-label" data-i18n-id="Keahlian:">Skills:</span>
                   <span class="experience-skill-tag">React JS</span>
                   <span class="experience-skill-tag">Tailwind CSS</span>
                   <span class="experience-skill-tag">JavaScript</span>
@@ -1220,7 +1328,7 @@
           </section>
 
           <section class="skill">
-            <h3 class="h3 skills-title">Technical Skills</h3>
+            <h3 class="h3 skills-title" data-translate="technicalSkills">Technical Skills</h3>
 
             <div class="skills-list content-card">
               <div class="experience-skills">
@@ -1268,7 +1376,7 @@
               </div>
 
               <div class="experience-skills" style="margin-top: 14px">
-                <span class="experience-skills-label">Others:</span>
+                <span class="experience-skills-label" data-i18n-id="Lainnya:">Others:</span>
                 <span class="experience-skill-tag">API Integration</span>
                 <span class="experience-skill-tag">SEO</span>
               </div>
@@ -1288,83 +1396,49 @@
 
         <article class="portfolio" data-page="portfolio">
           <header>
-            <div
-              style="
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                flex-wrap: wrap;
-                gap: 15px;
-                margin-bottom: 20px;
-              "
-            >
-              <h2 class="h2 article-title">Portfolio</h2>
+            <div class="article-header">
+              <h2 class="h2 article-title" data-translate="portfolio">Portfolio</h2>
               <a
                 href="./assets/datas/Portofolio Rizal Fauzan.pdf"
                 download
-                style="
-                  color: hsl(210, 100%, 60%);
-                  text-decoration: none;
-                  display: flex;
-                  align-items: center;
-                  gap: 8px;
-                  font-size: 16px;
-                  padding: 10px 20px;
-                  background: hsl(0, 0%, 98%);
-                  border: 1px solid hsl(0, 0%, 90%);
-                  border-radius: 12px;
-                  transition: 0.3s ease;
-                  z-index: 1;
-                  box-shadow: 0 2px 8px hsla(0, 0%, 0%, 0.05);
-                "
+                class="download-btn"
               >
                 <ion-icon name="download-outline"></ion-icon>
-                Download Portfolio
+                <span data-translate="downloadPortfolio">Download Portfolio</span>
               </a>
             </div>
           </header>
 
           <section class="projects">
-            <ul class="filter-list">
-              <li class="filter-item">
-                <button class="active" data-filter-btn>All</button>
-              </li>
-
-              <li class="filter-item">
-                <button data-filter-btn>Web development</button>
-              </li>
-            </ul>
-
-            <div class="filter-select-box">
-              <button class="filter-select" data-select>
-                <div class="select-value" data-selecct-value>
-                  Select category
-                </div>
-
-                <div class="select-icon">
-                  <ion-icon name="chevron-down"></ion-icon>
-                </div>
-              </button>
-
-              <ul class="select-list">
-                <li class="select-item">
-                  <button data-select-item>All</button>
-                </li>
-
-                <li class="select-item">
-                  <button data-select-item>Web development</button>
-                </li>
-              </ul>
+            <div class="project-toolbar">
+              <label class="project-search">
+                <ion-icon name="search-outline"></ion-icon>
+                <input
+                  type="search"
+                  placeholder="Search projects…"
+                  aria-label="Search projects"
+                  data-project-search
+                  data-translate-placeholder="searchProjects"
+                />
+              </label>
             </div>
 
+            <p class="project-empty" data-project-empty hidden data-translate="noProjects">
+              No projects match your search.
+            </p>
+
             <ul class="project-list">
-              <li class="project-item active" data-filter-item data-category="web development">
+              <li class="project-item active" data-filter-item data-tech="Laravel, Inertia.js, React JS">
                 <a
-                  href="https://trisfo.iia-indonesia.org"
+                  href="https://fukumarutravel.com/"
                   data-project-link
-                  data-popup-title="Trisfo IIA Indonesia"
-                  data-popup-url="https://trisfo.iia-indonesia.org"
-                  data-popup-img="./assets/images/portfolio/trisfo-iia-indonesia-pdf.jpeg"
+                  data-popup-title="Fukumaru Travel"
+                  data-popup-url="https://fukumarutravel.com/"
+                  data-popup-img="./assets/images/portfolio/fukumaru-travel.webp"
+                  data-popup-desc="Travel booking platform for domestic and international tour packages (Bali, Labuan Bajo, Raja Ampat, Japan, Europe) with down-payment and installment plans."
+                  data-popup-desc-id="Platform pemesanan paket wisata dalam &amp; luar negeri (Bali, Labuan Bajo, Raja Ampat, Jepang, Eropa) dengan sistem DP dan cicilan."
+                  data-popup-repo=""
+                  data-popup-store=""
                   data-popup-status="live"
                 >
                   <figure class="project-img">
@@ -1373,25 +1447,29 @@
                     </div>
 
                     <img
-                      src="./assets/images/portfolio/trisfo-iia-indonesia-pdf.jpeg"
-                      alt="Trisfo IIA Indonesia"
+                      src="./assets/images/portfolio/fukumaru-travel-thumb.webp"
+                      alt="Fukumaru Travel"
                       loading="lazy"
                     />
                   </figure>
 
-                  <h3 class="project-title">Trisfo IIA Indonesia</h3>
+                  <h3 class="project-title">Fukumaru Travel</h3>
 
                   <p class="project-category">Web development</p>
                 </a>
               </li>
 
-              <li class="project-item active" data-filter-item data-category="web development">
+              <li class="project-item active" data-filter-item data-tech="Laravel, Inertia.js, React JS">
                 <a
-                  href="https://natcon.iia-indonesia.org/2023/"
+                  href="https://fukumarutravel.com/login"
                   data-project-link
-                  data-popup-title="Natcon IIA Indonesia 2023"
-                  data-popup-url="https://natcon.iia-indonesia.org/2023/"
-                  data-popup-img="./assets/images/portfolio/natcon-iia-indonesia-2023.jpg"
+                  data-popup-title="Fukumaru Travel Member Area"
+                  data-popup-url="https://fukumarutravel.com/login"
+                  data-popup-img="./assets/images/portfolio/fukumaru-travel-login.webp"
+                  data-popup-desc="Customer account area of Fukumaru Travel for managing bookings and installment payments."
+                  data-popup-desc-id="Area akun pelanggan Fukumaru Travel untuk mengelola pemesanan dan pembayaran cicilan."
+                  data-popup-repo=""
+                  data-popup-store=""
                   data-popup-status="live"
                 >
                   <figure class="project-img">
@@ -1400,376 +1478,29 @@
                     </div>
 
                     <img
-                      src="./assets/images/portfolio/natcon-iia-indonesia-2023.jpg"
-                      alt="Natcon IIA Indonesia 2023"
+                      src="./assets/images/portfolio/fukumaru-travel-login-thumb.webp"
+                      alt="Fukumaru Travel Member Area"
                       loading="lazy"
                     />
                   </figure>
 
-                  <h3 class="project-title">Natcon IIA Indonesia 2023</h3>
+                  <h3 class="project-title">Fukumaru Travel Member Area</h3>
 
                   <p class="project-category">Web development</p>
                 </a>
               </li>
 
-              <li class="project-item active" data-filter-item data-category="web development">
-                <a
-                  href="https://gudang.smesco.go.id/"
-                  data-project-link
-                  data-popup-title="Gudang Smesco"
-                  data-popup-url="https://gudang.smesco.go.id/"
-                  data-popup-img="./assets/images/portfolio/gudang-smesco-pdf.jpeg"
-                  data-popup-status="live"
-                >
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/portfolio/gudang-smesco-pdf.jpeg"
-                      alt="Gudang Smesco"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">Gudang Smesco</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="web development">
-                <a
-                  href="https://www.inovindoacademy.com/"
-                  data-project-link
-                  data-popup-title="Inovindo Academy"
-                  data-popup-url="https://www.inovindoacademy.com/"
-                  data-popup-img="./assets/images/portfolio/inovindo-academy.jpg"
-                  data-popup-status="live"
-                >
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/portfolio/inovindo-academy.jpg"
-                      alt="Inovindo Academy"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">Inovindo Academy</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="web development">
-                <a
-                  href="https://gpstrack.id/"
-                  data-project-link
-                  data-popup-title="GPSTrack"
-                  data-popup-url="https://gpstrack.id/"
-                  data-popup-img="./assets/images/portfolio/gpstrack.jpg"
-                  data-popup-status="live"
-                >
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/portfolio/gpstrack.jpg"
-                      alt="GPSTrack"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">GPSTrack</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="web development">
-                <a
-                  href="https://hasbitinusuntukrajaampat.com/"
-                  data-project-link
-                  data-popup-title="Hasbitinus Untuk Raja Ampat"
-                  data-popup-url="https://hasbitinusuntukrajaampat.com/"
-                  data-popup-img="./assets/images/portfolio/hasbitinus-raja-ampat-pdf.jpeg"
-                  data-popup-status="live"
-                >
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/portfolio/hasbitinus-raja-ampat-pdf.jpeg"
-                      alt="Hasbitinus Untuk Raja Ampat"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">Hasbitinus Untuk Raja Ampat</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="web development">
-                <a
-                  href="https://trackgps.id/"
-                  data-project-link
-                  data-popup-title="TrackGPS Indonesia"
-                  data-popup-url="https://trackgps.id/"
-                  data-popup-img="./assets/images/portfolio/trackgps.jpg"
-                  data-popup-status="live"
-                >
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/portfolio/trackgps.jpg"
-                      alt="TrackGPS Indonesia"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">TrackGPS Indonesia</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="web development">
-                <a
-                  href="https://hr.digivise.id/"
-                  data-project-link
-                  data-popup-title="HRIS Digivise"
-                  data-popup-url="https://hr.digivise.id/"
-                  data-popup-img="./assets/images/portfolio/hris-digivise-pdf.jpeg"
-                  data-popup-status="live"
-                >
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/portfolio/hris-digivise-pdf.jpeg"
-                      alt="HRIS Digivise"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">HRIS Digivise</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="web development">
-                <a
-                  href="https://digivise.id/"
-                  data-project-link
-                  data-popup-title="Digivise"
-                  data-popup-url="https://digivise.id/"
-                  data-popup-img="./assets/images/portfolio/digivise.jpg"
-                  data-popup-status="live"
-                >
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/portfolio/digivise.jpg"
-                      alt="Digivise"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">Digivise</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="web development">
-                <a
-                  href="https://apps.patrass.com/login"
-                  data-project-link
-                  data-popup-title="Apps Patrass"
-                  data-popup-url="https://apps.patrass.com/login"
-                  data-popup-img="./assets/images/portfolio/apps-patrass.jpg"
-                  data-popup-status="live"
-                >
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/portfolio/apps-patrass.jpg"
-                      alt="Apps Patrass"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">Apps Patrass</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="web development">
-                <a
-                  href="https://wedison.co/"
-                  data-project-link
-                  data-popup-title="Wedison"
-                  data-popup-url="https://wedison.co/"
-                  data-popup-img="./assets/images/portfolio/wedison.jpg"
-                  data-popup-status="live"
-                >
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/portfolio/wedison.jpg"
-                      alt="Wedison"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">Wedison</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="web development">
-                <a
-                  href="https://sikepang.mimikakab.go.id/login"
-                  data-project-link
-                  data-popup-title="Sikepang Mimika"
-                  data-popup-url="https://sikepang.mimikakab.go.id/login"
-                  data-popup-img="./assets/images/portfolio/sikepang-mimika.jpg"
-                  data-popup-status="live"
-                >
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/portfolio/sikepang-mimika.jpg"
-                      alt="Sikepang Mimika"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">Sikepang Mimika</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="web development">
-                <a
-                  href="https://iia-indonesia.org/login-misfo/"
-                  data-project-link
-                  data-popup-title="IIA Indonesia MISFO Login"
-                  data-popup-url="https://iia-indonesia.org/login-misfo/"
-                  data-popup-img="./assets/images/portfolio/iia-indonesia-misfo.jpg"
-                  data-popup-status="live"
-                >
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/portfolio/iia-indonesia-misfo.jpg"
-                      alt="IIA Indonesia MISFO Login"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">IIA Indonesia MISFO Login</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="web development">
-                <a
-                  href="https://agenda-sooty-three-59.vercel.app/"
-                  data-project-link
-                  data-popup-title="Mivy Agenda"
-                  data-popup-url="https://agenda-sooty-three-59.vercel.app/"
-                  data-popup-img="./assets/images/portfolio/agenda-mivy.jpg"
-                  data-popup-status="live"
-                >
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/portfolio/agenda-mivy.jpg"
-                      alt="Mivy Agenda"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">Mivy Agenda</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="web development">
-                <a
-                  href="https://dev.inventaris.apg.co.id/login"
-                  data-project-link
-                  data-popup-title="Sistem Inventaris APG"
-                  data-popup-url="https://dev.inventaris.apg.co.id/login"
-                  data-popup-img="./assets/images/portfolio/inventaris-apg.jpg"
-                  data-popup-status="live"
-                >
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/portfolio/inventaris-apg.jpg"
-                      alt="Sistem Inventaris APG"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">Sistem Inventaris APG</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="web development">
+              <li class="project-item active" data-filter-item data-tech="Laravel, Inertia.js, React JS, Tailwind">
                 <a
                   href="https://hris.apg.co.id/login"
                   data-project-link
                   data-popup-title="HRIS APG"
                   data-popup-url="https://hris.apg.co.id/login"
-                  data-popup-img="./assets/images/portfolio/hris-apg.jpg"
+                  data-popup-img="./assets/images/portfolio/hris-apg.webp"
+                  data-popup-desc="Human resource information system built at PT Ardana Perkasa Group."
+                  data-popup-desc-id="Sistem informasi SDM yang dibangun di PT Ardana Perkasa Group."
+                  data-popup-repo=""
+                  data-popup-store=""
                   data-popup-status="live"
                 >
                   <figure class="project-img">
@@ -1778,7 +1509,7 @@
                     </div>
 
                     <img
-                      src="./assets/images/portfolio/hris-apg.jpg"
+                      src="./assets/images/portfolio/hris-apg-thumb.webp"
                       alt="HRIS APG"
                       loading="lazy"
                     />
@@ -1790,13 +1521,17 @@
                 </a>
               </li>
 
-              <li class="project-item active" data-filter-item data-category="web development">
+              <li class="project-item active" data-filter-item data-tech="Laravel, Inertia.js, React JS">
                 <a
                   href="https://dwp.bprbonding.my.id/"
                   data-project-link
                   data-popup-title="DWP BPR Bonding"
                   data-popup-url="https://dwp.bprbonding.my.id/"
-                  data-popup-img="./assets/images/portfolio/dwp-bpr-bonding.jpg"
+                  data-popup-img="./assets/images/portfolio/dwp-bpr-bonding.webp"
+                  data-popup-desc="DWP Core, the core system of DWP Assurance built at PT Ardana Perkasa Group."
+                  data-popup-desc-id="DWP Core, sistem inti DWP Assurance yang dibangun di PT Ardana Perkasa Group."
+                  data-popup-repo=""
+                  data-popup-store=""
                   data-popup-status="live"
                 >
                   <figure class="project-img">
@@ -1805,7 +1540,7 @@
                     </div>
 
                     <img
-                      src="./assets/images/portfolio/dwp-bpr-bonding.jpg"
+                      src="./assets/images/portfolio/dwp-bpr-bonding-thumb.webp"
                       alt="DWP BPR Bonding"
                       loading="lazy"
                     />
@@ -1817,40 +1552,17 @@
                 </a>
               </li>
 
-              <li class="project-item active" data-filter-item data-category="web development">
-                <a
-                  href="https://raport.pradabc.com"
-                  data-project-link
-                  data-popup-title="Raport Pradabc"
-                  data-popup-url="https://raport.pradabc.com"
-                  data-popup-img="./assets/images/portfolio/raport-pradabc.jpg"
-                  data-popup-status="live"
-                >
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/portfolio/raport-pradabc.jpg"
-                      alt="Raport Pradabc"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">Raport Pradabc</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="web development">
+              <li class="project-item active" data-filter-item data-tech="React JS, Vite">
                 <a
                   href="https://finance.bprbonding.my.id/"
                   data-project-link
                   data-popup-title="Finance BPR Bonding"
                   data-popup-url="https://finance.bprbonding.my.id/"
-                  data-popup-img="./assets/images/portfolio/finance-bpr-bonding.jpg"
+                  data-popup-img="./assets/images/portfolio/finance-bpr-bonding.webp"
+                  data-popup-desc="Finance System built at PT Ardana Perkasa Group."
+                  data-popup-desc-id="Finance System yang dibangun di PT Ardana Perkasa Group."
+                  data-popup-repo=""
+                  data-popup-store=""
                   data-popup-status="live"
                 >
                   <figure class="project-img">
@@ -1859,7 +1571,7 @@
                     </div>
 
                     <img
-                      src="./assets/images/portfolio/finance-bpr-bonding.jpg"
+                      src="./assets/images/portfolio/finance-bpr-bonding-thumb.webp"
                       alt="Finance BPR Bonding"
                       loading="lazy"
                     />
@@ -1871,13 +1583,17 @@
                 </a>
               </li>
 
-              <li class="project-item active" data-filter-item data-category="web development">
+              <li class="project-item active" data-filter-item data-tech="Laravel, Inertia.js, React JS">
                 <a
                   href="https://warehouse.warmis.id"
                   data-project-link
                   data-popup-title="Waremis Warehouse"
                   data-popup-url="https://warehouse.warmis.id"
-                  data-popup-img="./assets/images/portfolio/waremis-warehouse.jpg"
+                  data-popup-img="./assets/images/portfolio/waremis-warehouse.webp"
+                  data-popup-desc="Warehouse inventory app for Warmis: track stock, manage suppliers and run warehouse operations in real time."
+                  data-popup-desc-id="Aplikasi inventaris gudang Warmis: lacak stok, kelola supplier, dan jalankan operasional gudang secara real-time."
+                  data-popup-repo=""
+                  data-popup-store=""
                   data-popup-status="live"
                 >
                   <figure class="project-img">
@@ -1886,7 +1602,7 @@
                     </div>
 
                     <img
-                      src="./assets/images/portfolio/waremis-warehouse.jpg"
+                      src="./assets/images/portfolio/waremis-warehouse-thumb.webp"
                       alt="Waremis Warehouse"
                       loading="lazy"
                     />
@@ -1898,13 +1614,17 @@
                 </a>
               </li>
 
-              <li class="project-item active" data-filter-item data-category="web development">
+              <li class="project-item active" data-filter-item data-tech="Next.js">
                 <a
                   href="https://warmis.id"
                   data-project-link
                   data-popup-title="Warmis"
                   data-popup-url="https://warmis.id"
-                  data-popup-img="./assets/images/portfolio/warmis.jpg"
+                  data-popup-img="./assets/images/portfolio/warmis.webp"
+                  data-popup-desc="Marketing website for Warmis, a warehouse management system with real-time stock, multi-warehouse support and barcode/QR stock-taking."
+                  data-popup-desc-id="Website pemasaran Warmis, software manajemen gudang dengan stok real-time, multi-gudang, dan stock opname via barcode/QR."
+                  data-popup-repo=""
+                  data-popup-store=""
                   data-popup-status="live"
                 >
                   <figure class="project-img">
@@ -1913,7 +1633,7 @@
                     </div>
 
                     <img
-                      src="./assets/images/portfolio/warmis.jpg"
+                      src="./assets/images/portfolio/warmis-thumb.webp"
                       alt="Warmis"
                       loading="lazy"
                     />
@@ -1925,120 +1645,17 @@
                 </a>
               </li>
 
-              <li class="project-item active" data-filter-item data-category="web development">
-                <a
-                  href="https://alihsanislamicsch.co.id/"
-                  data-project-link
-                  data-popup-title="Al-Ihsan Islamic School"
-                  data-popup-url="https://alihsanislamicsch.co.id/"
-                  data-popup-img="./assets/images/portfolio/alihsan-islamic-school.jpg"
-                  data-popup-status="live"
-                >
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/portfolio/alihsan-islamic-school.jpg"
-                      alt="Al-Ihsan Islamic School"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">Al-Ihsan Islamic School</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="web development">
-                <a
-                  href="https://cms.alihsanislamicsch.co.id/admin/login"
-                  data-project-link
-                  data-popup-title="Al-Ihsan CMS"
-                  data-popup-url="https://cms.alihsanislamicsch.co.id/admin/login"
-                  data-popup-img="./assets/images/portfolio/alihsan-cms.jpg"
-                  data-popup-status="live"
-                >
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/portfolio/alihsan-cms.jpg"
-                      alt="Al-Ihsan CMS"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">Al-Ihsan CMS</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="web development">
-                <a
-                  href="https://www.baraprimasentosa.com/"
-                  data-project-link
-                  data-popup-title="Bara Prima Sentosa"
-                  data-popup-url="https://www.baraprimasentosa.com/"
-                  data-popup-img=""
-                  data-popup-status="offline"
-                >
-                  <figure class="project-img project-img-offline">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <div class="project-offline-note">
-                      <ion-icon name="cloud-offline-outline"></ion-icon>
-                      <span>Site currently unavailable</span>
-                    </div>
-                  </figure>
-
-                  <h3 class="project-title">Bara Prima Sentosa</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="web development">
-                <a
-                  href="https://hostohost-frontend.vercel.app/login"
-                  data-project-link
-                  data-popup-title="H2H Broker"
-                  data-popup-url="https://hostohost-frontend.vercel.app/login"
-                  data-popup-img="./assets/images/portfolio/h2h-broker.jpg"
-                  data-popup-status="live"
-                >
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/portfolio/h2h-broker.jpg"
-                      alt="H2H Broker"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">H2H Broker</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="web development">
+              <li class="project-item active" data-filter-item data-tech="Next.js">
                 <a
                   href="https://carakamulia.com/"
                   data-project-link
                   data-popup-title="Caraka Mulia"
                   data-popup-url="https://carakamulia.com/"
-                  data-popup-img="./assets/images/portfolio/caraka-mulia.jpg"
+                  data-popup-img="./assets/images/portfolio/caraka-mulia.webp"
+                  data-popup-desc="Company website for Caraka Mulia, an insurance broker."
+                  data-popup-desc-id="Website perusahaan Caraka Mulia, broker asuransi."
+                  data-popup-repo=""
+                  data-popup-store=""
                   data-popup-status="live"
                 >
                   <figure class="project-img">
@@ -2047,7 +1664,7 @@
                     </div>
 
                     <img
-                      src="./assets/images/portfolio/caraka-mulia.jpg"
+                      src="./assets/images/portfolio/caraka-mulia-thumb.webp"
                       alt="Caraka Mulia"
                       loading="lazy"
                     />
@@ -2059,13 +1676,17 @@
                 </a>
               </li>
 
-              <li class="project-item active" data-filter-item data-category="web development">
+              <li class="project-item active" data-filter-item data-tech="Next.js">
                 <a
-                  href="https://pt-unggul-abadi-elektrindo.vercel.app/"
+                  href="https://wedison.co/"
                   data-project-link
-                  data-popup-title="PT Unggul Abadi Elektrindo"
-                  data-popup-url="https://pt-unggul-abadi-elektrindo.vercel.app/"
-                  data-popup-img="./assets/images/portfolio/unggul-abadi-elektrindo.jpg"
+                  data-popup-title="Wedison"
+                  data-popup-url="https://wedison.co/"
+                  data-popup-img="./assets/images/portfolio/wedison.webp"
+                  data-popup-desc="Website for Wedison, an Indonesian electric motorcycle maker with SuperCharge fast-charging technology."
+                  data-popup-desc-id="Website Wedison, produsen motor listrik Indonesia dengan teknologi pengisian cepat SuperCharge."
+                  data-popup-repo=""
+                  data-popup-store=""
                   data-popup-status="live"
                 >
                   <figure class="project-img">
@@ -2074,7 +1695,472 @@
                     </div>
 
                     <img
-                      src="./assets/images/portfolio/unggul-abadi-elektrindo.jpg"
+                      src="./assets/images/portfolio/wedison-thumb.webp"
+                      alt="Wedison"
+                      loading="lazy"
+                    />
+                  </figure>
+
+                  <h3 class="project-title">Wedison</h3>
+
+                  <p class="project-category">Web development</p>
+                </a>
+              </li>
+
+              <li class="project-item active" data-filter-item data-tech="React JS, Vite">
+                <a
+                  href="https://digivise.id/"
+                  data-project-link
+                  data-popup-title="Digivise"
+                  data-popup-url="https://digivise.id/"
+                  data-popup-img="./assets/images/portfolio/digivise.webp"
+                  data-popup-desc="Company website for Digivise, a performance marketing and creative partner for fashion, skincare and retail brands."
+                  data-popup-desc-id="Website perusahaan Digivise, partner performance marketing dan kreatif untuk brand fashion, skincare, dan retail."
+                  data-popup-repo=""
+                  data-popup-store=""
+                  data-popup-status="live"
+                >
+                  <figure class="project-img">
+                    <div class="project-item-icon-box">
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+
+                    <img
+                      src="./assets/images/portfolio/digivise-thumb.webp"
+                      alt="Digivise"
+                      loading="lazy"
+                    />
+                  </figure>
+
+                  <h3 class="project-title">Digivise</h3>
+
+                  <p class="project-category">Web development</p>
+                </a>
+              </li>
+
+              <li class="project-item active" data-filter-item data-tech="Laravel, Inertia.js, React JS">
+                <a
+                  href="https://dev.inventaris.apg.co.id/login"
+                  data-project-link
+                  data-popup-title="Sistem Inventaris APG"
+                  data-popup-url="https://dev.inventaris.apg.co.id/login"
+                  data-popup-img="./assets/images/portfolio/inventaris-apg.webp"
+                  data-popup-desc="Asset inventory system built at PT Ardana Perkasa Group."
+                  data-popup-desc-id="Sistem inventaris aset yang dibangun di PT Ardana Perkasa Group."
+                  data-popup-repo=""
+                  data-popup-store=""
+                  data-popup-status="live"
+                >
+                  <figure class="project-img">
+                    <div class="project-item-icon-box">
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+
+                    <img
+                      src="./assets/images/portfolio/inventaris-apg-thumb.webp"
+                      alt="Sistem Inventaris APG"
+                      loading="lazy"
+                    />
+                  </figure>
+
+                  <h3 class="project-title">Sistem Inventaris APG</h3>
+
+                  <p class="project-category">Web development</p>
+                </a>
+              </li>
+
+              <li class="project-item active" data-filter-item data-tech="Laravel, Tailwind">
+                <a
+                  href="https://raport.pradabc.com"
+                  data-project-link
+                  data-popup-title="Raport Pradabc"
+                  data-popup-url="https://raport.pradabc.com"
+                  data-popup-img="./assets/images/portfolio/raport-pradabc.webp"
+                  data-popup-desc="Digital report card (raport) module of the Prada BC System."
+                  data-popup-desc-id="Modul raport digital dari Prada BC System."
+                  data-popup-repo=""
+                  data-popup-store=""
+                  data-popup-status="live"
+                >
+                  <figure class="project-img">
+                    <div class="project-item-icon-box">
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+
+                    <img
+                      src="./assets/images/portfolio/raport-pradabc-thumb.webp"
+                      alt="Raport Pradabc"
+                      loading="lazy"
+                    />
+                  </figure>
+
+                  <h3 class="project-title">Raport Pradabc</h3>
+
+                  <p class="project-category">Web development</p>
+                </a>
+              </li>
+
+              <li class="project-item active" data-filter-item data-tech="Vue.js, Laravel">
+                <a
+                  href="https://sikepang.mimikakab.go.id/login"
+                  data-project-link
+                  data-popup-title="Sikepang Mimika"
+                  data-popup-url="https://sikepang.mimikakab.go.id/login"
+                  data-popup-img="./assets/images/portfolio/sikepang-mimika.webp"
+                  data-popup-desc="Food security application for the Mimika Regency government: a dashboard and landing page that visualize food security data as charts and tables."
+                  data-popup-desc-id="Aplikasi ketahanan pangan untuk Pemerintah Kabupaten Mimika: dashboard dan landing page yang menyajikan data ketahanan pangan dalam bentuk grafik dan tabel."
+                  data-popup-repo=""
+                  data-popup-store=""
+                  data-popup-status="live"
+                >
+                  <figure class="project-img">
+                    <div class="project-item-icon-box">
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+
+                    <img
+                      src="./assets/images/portfolio/sikepang-mimika-thumb.webp"
+                      alt="Sikepang Mimika"
+                      loading="lazy"
+                    />
+                  </figure>
+
+                  <h3 class="project-title">Sikepang Mimika</h3>
+
+                  <p class="project-category">Web development</p>
+                </a>
+              </li>
+
+              <li class="project-item active" data-filter-item data-tech="Laravel, Vite, Bootstrap">
+                <a
+                  href="https://trackgps.id/"
+                  data-project-link
+                  data-popup-title="TrackGPS Indonesia"
+                  data-popup-url="https://trackgps.id/"
+                  data-popup-img="./assets/images/portfolio/trackgps.webp"
+                  data-popup-desc="Web platform for a GPS tracking server system."
+                  data-popup-desc-id="Platform web untuk sistem server GPS tracking."
+                  data-popup-repo=""
+                  data-popup-store=""
+                  data-popup-status="live"
+                >
+                  <figure class="project-img">
+                    <div class="project-item-icon-box">
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+
+                    <img
+                      src="./assets/images/portfolio/trackgps-thumb.webp"
+                      alt="TrackGPS Indonesia"
+                      loading="lazy"
+                    />
+                  </figure>
+
+                  <h3 class="project-title">TrackGPS Indonesia</h3>
+
+                  <p class="project-category">Web development</p>
+                </a>
+              </li>
+
+              <li class="project-item active" data-filter-item data-tech="Laravel, Bootstrap, jQuery">
+                <a
+                  href="https://apps.patrass.com/login"
+                  data-project-link
+                  data-popup-title="Apps Patrass"
+                  data-popup-url="https://apps.patrass.com/login"
+                  data-popup-img="./assets/images/portfolio/apps-patrass.webp"
+                  data-popup-desc="Internal web application for PATRA, available to registered users."
+                  data-popup-desc-id="Aplikasi web internal untuk PATRA, khusus pengguna terdaftar."
+                  data-popup-repo=""
+                  data-popup-store=""
+                  data-popup-status="live"
+                >
+                  <figure class="project-img">
+                    <div class="project-item-icon-box">
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+
+                    <img
+                      src="./assets/images/portfolio/apps-patrass-thumb.webp"
+                      alt="Apps Patrass"
+                      loading="lazy"
+                    />
+                  </figure>
+
+                  <h3 class="project-title">Apps Patrass</h3>
+
+                  <p class="project-category">Web development</p>
+                </a>
+              </li>
+
+              <li class="project-item active" data-filter-item data-tech="Laravel, JavaScript">
+                <a
+                  href="https://alihsanislamicsch.co.id/"
+                  data-project-link
+                  data-popup-title="Al-Ihsan Islamic School"
+                  data-popup-url="https://alihsanislamicsch.co.id/"
+                  data-popup-img="./assets/images/portfolio/alihsan-islamic-school.webp"
+                  data-popup-desc="School website with profile, curriculum and new student registration (PPDB) pages, managed through a custom CMS."
+                  data-popup-desc-id="Website sekolah dengan halaman profil, kurikulum, dan pendaftaran peserta didik baru (PPDB), dikelola melalui CMS khusus."
+                  data-popup-repo=""
+                  data-popup-store=""
+                  data-popup-status="live"
+                >
+                  <figure class="project-img">
+                    <div class="project-item-icon-box">
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+
+                    <img
+                      src="./assets/images/portfolio/alihsan-islamic-school-thumb.webp"
+                      alt="Al-Ihsan Islamic School"
+                      loading="lazy"
+                    />
+                  </figure>
+
+                  <h3 class="project-title">Al-Ihsan Islamic School</h3>
+
+                  <p class="project-category">Web development</p>
+                </a>
+              </li>
+
+              <li class="project-item active" data-filter-item data-tech="Laravel, Filament, Livewire">
+                <a
+                  href="https://cms.alihsanislamicsch.co.id/admin/login"
+                  data-project-link
+                  data-popup-title="Al-Ihsan CMS"
+                  data-popup-url="https://cms.alihsanislamicsch.co.id/admin/login"
+                  data-popup-img="./assets/images/portfolio/alihsan-cms.webp"
+                  data-popup-desc="Admin CMS with login and access rights so the school can manage news, announcements and activity galleries on its own."
+                  data-popup-desc-id="CMS admin dengan login dan hak akses agar sekolah dapat mengelola berita, pengumuman, dan galeri kegiatan secara mandiri."
+                  data-popup-repo="https://github.com/Zalefzn/cms_alihsan"
+                  data-popup-store=""
+                  data-popup-status="live"
+                >
+                  <figure class="project-img">
+                    <div class="project-item-icon-box">
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+
+                    <img
+                      src="./assets/images/portfolio/alihsan-cms-thumb.webp"
+                      alt="Al-Ihsan CMS"
+                      loading="lazy"
+                    />
+                  </figure>
+
+                  <h3 class="project-title">Al-Ihsan CMS</h3>
+
+                  <p class="project-category">Web development</p>
+                </a>
+              </li>
+
+              <li class="project-item active" data-filter-item data-tech="Laravel, Bootstrap, Alpine.js">
+                <a
+                  href="https://www.inovindoacademy.com/"
+                  data-project-link
+                  data-popup-title="Inovindo Academy"
+                  data-popup-url="https://www.inovindoacademy.com/"
+                  data-popup-img="./assets/images/portfolio/inovindo-academy.webp"
+                  data-popup-desc="Website for Inovindo Academy, PT Inovindo Digital Media&#x27;s vocational education platform for internships and courses."
+                  data-popup-desc-id="Website Inovindo Academy, platform pendidikan vokasi PT Inovindo Digital Media untuk program magang dan kursus."
+                  data-popup-repo=""
+                  data-popup-store=""
+                  data-popup-status="live"
+                >
+                  <figure class="project-img">
+                    <div class="project-item-icon-box">
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+
+                    <img
+                      src="./assets/images/portfolio/inovindo-academy-thumb.webp"
+                      alt="Inovindo Academy"
+                      loading="lazy"
+                    />
+                  </figure>
+
+                  <h3 class="project-title">Inovindo Academy</h3>
+
+                  <p class="project-category">Web development</p>
+                </a>
+              </li>
+
+              <li class="project-item active" data-filter-item data-tech="Next.js">
+                <a
+                  href="https://hostohost-frontend.vercel.app/login"
+                  data-project-link
+                  data-popup-title="H2H Broker"
+                  data-popup-url="https://hostohost-frontend.vercel.app/login"
+                  data-popup-img="./assets/images/portfolio/h2h-broker.webp"
+                  data-popup-desc="Admin panel for H2H Broker (host-to-host)."
+                  data-popup-desc-id="Panel admin untuk H2H Broker (host-to-host)."
+                  data-popup-repo=""
+                  data-popup-store=""
+                  data-popup-status="live"
+                >
+                  <figure class="project-img">
+                    <div class="project-item-icon-box">
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+
+                    <img
+                      src="./assets/images/portfolio/h2h-broker-thumb.webp"
+                      alt="H2H Broker"
+                      loading="lazy"
+                    />
+                  </figure>
+
+                  <h3 class="project-title">H2H Broker</h3>
+
+                  <p class="project-category">Web development</p>
+                </a>
+              </li>
+
+              <li class="project-item active" data-filter-item data-tech="Next.js">
+                <a
+                  href="https://agenda-sooty-three-59.vercel.app/"
+                  data-project-link
+                  data-popup-title="Mivy Agenda"
+                  data-popup-url="https://agenda-sooty-three-59.vercel.app/"
+                  data-popup-img="./assets/images/portfolio/agenda-mivy.webp"
+                  data-popup-desc="Shared calendar app for couples to plan dates and daily activities together."
+                  data-popup-desc-id="Aplikasi kalender bersama untuk pasangan dalam merencanakan kencan dan kegiatan harian."
+                  data-popup-repo=""
+                  data-popup-store=""
+                  data-popup-status="live"
+                >
+                  <figure class="project-img">
+                    <div class="project-item-icon-box">
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+
+                    <img
+                      src="./assets/images/portfolio/agenda-mivy-thumb.webp"
+                      alt="Mivy Agenda"
+                      loading="lazy"
+                    />
+                  </figure>
+
+                  <h3 class="project-title">Mivy Agenda</h3>
+
+                  <p class="project-category">Web development</p>
+                </a>
+              </li>
+
+              <li class="project-item active" data-filter-item data-tech="HTML, Bootstrap, jQuery">
+                <a
+                  href="https://natcon.iia-indonesia.org/2023/"
+                  data-project-link
+                  data-popup-title="Natcon IIA Indonesia 2023"
+                  data-popup-url="https://natcon.iia-indonesia.org/2023/"
+                  data-popup-img="./assets/images/portfolio/natcon-iia-indonesia-2023.webp"
+                  data-popup-desc="Event website for the 2023 IIA Indonesia National Conference."
+                  data-popup-desc-id="Website acara 2023 IIA Indonesia National Conference."
+                  data-popup-repo=""
+                  data-popup-store=""
+                  data-popup-status="live"
+                >
+                  <figure class="project-img">
+                    <div class="project-item-icon-box">
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+
+                    <img
+                      src="./assets/images/portfolio/natcon-iia-indonesia-2023-thumb.webp"
+                      alt="Natcon IIA Indonesia 2023"
+                      loading="lazy"
+                    />
+                  </figure>
+
+                  <h3 class="project-title">Natcon IIA Indonesia 2023</h3>
+
+                  <p class="project-category">Web development</p>
+                </a>
+              </li>
+
+              <li class="project-item active" data-filter-item data-tech="WordPress">
+                <a
+                  href="https://iia-indonesia.org/login-misfo/"
+                  data-project-link
+                  data-popup-title="IIA Indonesia MISFO Login"
+                  data-popup-url="https://iia-indonesia.org/login-misfo/"
+                  data-popup-img="./assets/images/portfolio/iia-indonesia-misfo.webp"
+                  data-popup-desc="Member data portal (My IIA Data) on the IIA Indonesia website."
+                  data-popup-desc-id="Portal data anggota (My IIA Data) di website IIA Indonesia."
+                  data-popup-repo=""
+                  data-popup-store=""
+                  data-popup-status="live"
+                >
+                  <figure class="project-img">
+                    <div class="project-item-icon-box">
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+
+                    <img
+                      src="./assets/images/portfolio/iia-indonesia-misfo-thumb.webp"
+                      alt="IIA Indonesia MISFO Login"
+                      loading="lazy"
+                    />
+                  </figure>
+
+                  <h3 class="project-title">IIA Indonesia MISFO Login</h3>
+
+                  <p class="project-category">Web development</p>
+                </a>
+              </li>
+
+              <li class="project-item active" data-filter-item data-tech="HTML, Bootstrap, JavaScript">
+                <a
+                  href="https://gpstrack.id/"
+                  data-project-link
+                  data-popup-title="GPSTrack"
+                  data-popup-url="https://gpstrack.id/"
+                  data-popup-img="./assets/images/portfolio/gpstrack.webp"
+                  data-popup-desc="Marketing website for a GPS tracking server application with real-time tracking and fleet management."
+                  data-popup-desc-id="Website pemasaran aplikasi server GPS tracking dengan pelacakan real-time dan manajemen armada."
+                  data-popup-repo=""
+                  data-popup-store=""
+                  data-popup-status="live"
+                >
+                  <figure class="project-img">
+                    <div class="project-item-icon-box">
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+
+                    <img
+                      src="./assets/images/portfolio/gpstrack-thumb.webp"
+                      alt="GPSTrack"
+                      loading="lazy"
+                    />
+                  </figure>
+
+                  <h3 class="project-title">GPSTrack</h3>
+
+                  <p class="project-category">Web development</p>
+                </a>
+              </li>
+
+              <li class="project-item active" data-filter-item data-tech="HTML, CSS, JavaScript">
+                <a
+                  href="https://pt-unggul-abadi-elektrindo.vercel.app/"
+                  data-project-link
+                  data-popup-title="PT Unggul Abadi Elektrindo"
+                  data-popup-url="https://pt-unggul-abadi-elektrindo.vercel.app/"
+                  data-popup-img="./assets/images/portfolio/unggul-abadi-elektrindo.webp"
+                  data-popup-desc="Responsive company profile website with on-page SEO optimization (meta tags, heading structure and page load speed)."
+                  data-popup-desc-id="Website company profile yang responsif dengan optimasi SEO on-page (meta tag, struktur heading, dan kecepatan muat halaman)."
+                  data-popup-repo=""
+                  data-popup-store=""
+                  data-popup-status="live"
+                >
+                  <figure class="project-img">
+                    <div class="project-item-icon-box">
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+
+                    <img
+                      src="./assets/images/portfolio/unggul-abadi-elektrindo-thumb.webp"
                       alt="PT Unggul Abadi Elektrindo"
                       loading="lazy"
                     />
@@ -2086,13 +2172,17 @@
                 </a>
               </li>
 
-              <li class="project-item active" data-filter-item data-category="web development">
+              <li class="project-item active" data-filter-item data-tech="HTML, Bootstrap, JavaScript">
                 <a
                   href="https://mappi-2.vercel.app/"
                   data-project-link
                   data-popup-title="MAPPI Indonesia"
                   data-popup-url="https://mappi-2.vercel.app/"
-                  data-popup-img="./assets/images/portfolio/mappi.jpg"
+                  data-popup-img="./assets/images/portfolio/mappi.webp"
+                  data-popup-desc="Website for MAPPI Indonesia."
+                  data-popup-desc-id="Website MAPPI Indonesia."
+                  data-popup-repo="https://github.com/Zalefzn/mappi_2"
+                  data-popup-store=""
                   data-popup-status="live"
                 >
                   <figure class="project-img">
@@ -2101,7 +2191,7 @@
                     </div>
 
                     <img
-                      src="./assets/images/portfolio/mappi.jpg"
+                      src="./assets/images/portfolio/mappi-thumb.webp"
                       alt="MAPPI Indonesia"
                       loading="lazy"
                     />
@@ -2113,13 +2203,17 @@
                 </a>
               </li>
 
-              <li class="project-item active" data-filter-item data-category="web development">
+              <li class="project-item active" data-filter-item data-tech="HTML, CSS, JavaScript">
                 <a
                   href="https://percetakan-bisnis.vercel.app/"
                   data-project-link
                   data-popup-title="Akbar Jaya Offset"
                   data-popup-url="https://percetakan-bisnis.vercel.app/"
-                  data-popup-img="./assets/images/portfolio/akbar-jaya-offset.jpg"
+                  data-popup-img="./assets/images/portfolio/akbar-jaya-offset.webp"
+                  data-popup-desc="Company website for Akbar Jaya Offset, a printing business."
+                  data-popup-desc-id="Website perusahaan Akbar Jaya Offset, usaha percetakan."
+                  data-popup-repo=""
+                  data-popup-store=""
                   data-popup-status="live"
                 >
                   <figure class="project-img">
@@ -2128,7 +2222,7 @@
                     </div>
 
                     <img
-                      src="./assets/images/portfolio/akbar-jaya-offset.jpg"
+                      src="./assets/images/portfolio/akbar-jaya-offset-thumb.webp"
                       alt="Akbar Jaya Offset"
                       loading="lazy"
                     />
@@ -2140,13 +2234,17 @@
                 </a>
               </li>
 
-              <li class="project-item active" data-filter-item data-category="web development">
+              <li class="project-item active" data-filter-item data-tech="HTML, Tailwind, JavaScript">
                 <a
                   href="https://kresnamultiutama.vercel.app/"
                   data-project-link
                   data-popup-title="CV Kresna Multi Utama"
                   data-popup-url="https://kresnamultiutama.vercel.app/"
-                  data-popup-img="./assets/images/portfolio/kresna-multi-utama.jpg"
+                  data-popup-img="./assets/images/portfolio/kresna-multi-utama.webp"
+                  data-popup-desc="Company website for CV Kresna Multi Utama, covering natural tea products and safety equipment."
+                  data-popup-desc-id="Website perusahaan CV Kresna Multi Utama untuk produk teh alami dan alat keselamatan."
+                  data-popup-repo=""
+                  data-popup-store=""
                   data-popup-status="live"
                 >
                   <figure class="project-img">
@@ -2155,13 +2253,167 @@
                     </div>
 
                     <img
-                      src="./assets/images/portfolio/kresna-multi-utama.jpg"
+                      src="./assets/images/portfolio/kresna-multi-utama-thumb.webp"
                       alt="CV Kresna Multi Utama"
                       loading="lazy"
                     />
                   </figure>
 
                   <h3 class="project-title">CV Kresna Multi Utama</h3>
+
+                  <p class="project-category">Web development</p>
+                </a>
+              </li>
+
+              <li class="project-item active" data-filter-item data-tech="React JS, Nest JS, Laravel">
+                <a
+                  href="https://hr.digivise.id/"
+                  data-project-link
+                  data-popup-title="HRIS Digivise"
+                  data-popup-url="https://hr.digivise.id/"
+                  data-popup-img="./assets/images/portfolio/hris-digivise-pdf.webp"
+                  data-popup-desc="Human Resource Management System for employee management, attendance, payroll and reporting, with automatic payroll calculation based on attendance data."
+                  data-popup-desc-id="Human Resource Management System untuk manajemen karyawan, absensi, penggajian, dan pelaporan, dengan perhitungan gaji otomatis berdasarkan data absensi."
+                  data-popup-repo=""
+                  data-popup-store=""
+                  data-popup-status="live"
+                >
+                  <figure class="project-img">
+                    <div class="project-item-icon-box">
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+
+                    <img
+                      src="./assets/images/portfolio/hris-digivise-pdf-thumb.webp"
+                      alt="HRIS Digivise"
+                      loading="lazy"
+                    />
+                  </figure>
+
+                  <h3 class="project-title">HRIS Digivise</h3>
+
+                  <p class="project-category">Web development</p>
+                </a>
+              </li>
+
+              <li class="project-item active" data-filter-item data-tech="">
+                <a
+                  href="https://trisfo.iia-indonesia.org"
+                  data-project-link
+                  data-popup-title="Trisfo IIA Indonesia"
+                  data-popup-url="https://trisfo.iia-indonesia.org"
+                  data-popup-img="./assets/images/portfolio/trisfo-iia-indonesia-pdf.webp"
+                  data-popup-desc=""
+                  data-popup-desc-id=""
+                  data-popup-repo=""
+                  data-popup-store=""
+                  data-popup-status="live"
+                >
+                  <figure class="project-img">
+                    <div class="project-item-icon-box">
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+
+                    <img
+                      src="./assets/images/portfolio/trisfo-iia-indonesia-pdf-thumb.webp"
+                      alt="Trisfo IIA Indonesia"
+                      loading="lazy"
+                    />
+                  </figure>
+
+                  <h3 class="project-title">Trisfo IIA Indonesia</h3>
+
+                  <p class="project-category">Web development</p>
+                </a>
+              </li>
+
+              <li class="project-item active" data-filter-item data-tech="">
+                <a
+                  href="https://gudang.smesco.go.id/"
+                  data-project-link
+                  data-popup-title="Gudang Smesco"
+                  data-popup-url="https://gudang.smesco.go.id/"
+                  data-popup-img="./assets/images/portfolio/gudang-smesco-pdf.webp"
+                  data-popup-desc=""
+                  data-popup-desc-id=""
+                  data-popup-repo=""
+                  data-popup-store=""
+                  data-popup-status="live"
+                >
+                  <figure class="project-img">
+                    <div class="project-item-icon-box">
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+
+                    <img
+                      src="./assets/images/portfolio/gudang-smesco-pdf-thumb.webp"
+                      alt="Gudang Smesco"
+                      loading="lazy"
+                    />
+                  </figure>
+
+                  <h3 class="project-title">Gudang Smesco</h3>
+
+                  <p class="project-category">Web development</p>
+                </a>
+              </li>
+
+              <li class="project-item active" data-filter-item data-tech="">
+                <a
+                  href="https://hasbitinusuntukrajaampat.com/"
+                  data-project-link
+                  data-popup-title="Hasbitinus Untuk Raja Ampat"
+                  data-popup-url="https://hasbitinusuntukrajaampat.com/"
+                  data-popup-img="./assets/images/portfolio/hasbitinus-raja-ampat-pdf.webp"
+                  data-popup-desc=""
+                  data-popup-desc-id=""
+                  data-popup-repo=""
+                  data-popup-store=""
+                  data-popup-status="live"
+                >
+                  <figure class="project-img">
+                    <div class="project-item-icon-box">
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+
+                    <img
+                      src="./assets/images/portfolio/hasbitinus-raja-ampat-pdf-thumb.webp"
+                      alt="Hasbitinus Untuk Raja Ampat"
+                      loading="lazy"
+                    />
+                  </figure>
+
+                  <h3 class="project-title">Hasbitinus Untuk Raja Ampat</h3>
+
+                  <p class="project-category">Web development</p>
+                </a>
+              </li>
+
+              <li class="project-item active" data-filter-item data-tech="">
+                <a
+                  href="https://www.baraprimasentosa.com/"
+                  data-project-link
+                  data-popup-title="Bara Prima Sentosa"
+                  data-popup-url="https://www.baraprimasentosa.com/"
+                  data-popup-img=""
+                  data-popup-desc=""
+                  data-popup-desc-id=""
+                  data-popup-repo=""
+                  data-popup-store=""
+                  data-popup-status="offline"
+                >
+                  <figure class="project-img project-img-offline">
+                    <div class="project-item-icon-box">
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+
+                    <div class="project-offline-note">
+                      <ion-icon name="cloud-offline-outline"></ion-icon>
+                      <span data-translate="siteUnavailable">Site currently unavailable</span>
+                    </div>
+                  </figure>
+
+                  <h3 class="project-title">Bara Prima Sentosa</h3>
 
                   <p class="project-category">Web development</p>
                 </a>
@@ -2188,7 +2440,7 @@
                     data-project-modal-offline
                   >
                     <ion-icon name="cloud-offline-outline"></ion-icon>
-                    <span>Site currently unavailable</span>
+                    <span data-translate="siteUnavailable">Site currently unavailable</span>
                   </div>
                 </div>
 
@@ -2197,16 +2449,44 @@
                   <p class="project-modal-category">Web development</p>
                   <p class="project-modal-url" data-project-modal-url></p>
 
-                  <a
-                    href="#"
-                    class="project-modal-link"
-                    data-project-modal-link
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    Visit Website
-                    <ion-icon name="open-outline"></ion-icon>
-                  </a>
+                  <p class="project-modal-desc" data-project-modal-desc></p>
+
+                  <div class="project-modal-actions">
+                    <a
+                      href="#"
+                      class="project-modal-link"
+                      data-project-modal-link
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <span data-translate="visitWebsite">Visit Website</span>
+                      <ion-icon name="open-outline"></ion-icon>
+                    </a>
+
+                    <a
+                      href="#"
+                      class="project-modal-link project-modal-link-alt"
+                      data-project-modal-repo
+                      target="_blank"
+                      rel="noopener"
+                      hidden
+                    >
+                      <span data-translate="sourceCode">Source Code</span>
+                      <ion-icon name="logo-github"></ion-icon>
+                    </a>
+
+                    <a
+                      href="#"
+                      class="project-modal-link project-modal-link-alt"
+                      data-project-modal-store
+                      target="_blank"
+                      rel="noopener"
+                      hidden
+                    >
+                      <span data-translate="getApp">Get the App</span>
+                      <ion-icon name="logo-google-playstore"></ion-icon>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -2219,7 +2499,7 @@
 
         <article class="certificates" data-page="certificates">
           <header>
-            <h2 class="h2 article-title">Certificates</h2>
+            <h2 class="h2 article-title" data-translate="certificates">Certificates</h2>
           </header>
 
           <section class="certificates">
@@ -2409,6 +2689,182 @@
             </ul>
           </section>
         </article>
+
+        <!--
+        - #CONTACT
+      -->
+
+        <article class="contact" data-page="contact">
+          <header>
+            <h2 class="h2 article-title" data-translate="contactMe">Contact me</h2>
+          </header>
+
+          <p class="contact-intro" data-translate="contactIntro">
+            Have a project, a job opening or just want to say hi? Chat with me
+            directly below, or reach me on WhatsApp or email.
+          </p>
+
+          <ul class="contact-quick-list">
+            <li>
+              <a
+                href="https://wa.me/6281290019303"
+                class="content-card contact-quick-item"
+                target="_blank"
+                rel="noopener"
+              >
+                <ion-icon name="logo-whatsapp"></ion-icon>
+                <span>
+                  <strong>WhatsApp</strong>
+                  <small>+62 812 9001 9303</small>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="mailto:rizalfauzan190@gmail.com"
+                class="content-card contact-quick-item"
+              >
+                <ion-icon name="mail-outline"></ion-icon>
+                <span>
+                  <strong>Email</strong>
+                  <small>rizalfauzan190@gmail.com</small>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.linkedin.com/in/rizal-fauzan-36785623b/"
+                class="content-card contact-quick-item"
+                target="_blank"
+                rel="noopener"
+              >
+                <ion-icon name="logo-linkedin"></ion-icon>
+                <span>
+                  <strong>LinkedIn</strong>
+                  <small>Rizal Fauzan</small>
+                </span>
+              </a>
+            </li>
+          </ul>
+
+          <section class="chat" data-chat>
+            <h3 class="h3 form-title" data-translate="liveChat">Live chat</h3>
+
+            <p class="chat-note" data-chat-unavailable hidden data-translate="chatUnavailable">
+              Live chat is not available right now. Please reach me on WhatsApp or email above.
+            </p>
+
+            <form class="chat-start" data-chat-start hidden novalidate>
+              <p class="chat-note" data-translate="chatStartNote">
+                Start a conversation and I'll reply right here. You can close
+                the page and come back later — your chat is saved on this
+                device.
+              </p>
+
+              <div class="input-wrapper">
+                <label class="form-field">
+                  <span class="form-label" data-translate="yourName">Full name</span>
+                  <input
+                    type="text"
+                    name="name"
+                    class="form-input"
+                    placeholder="e.g. Budi Santoso"
+                    maxlength="80"
+                    autocomplete="name"
+                    required
+                  />
+                </label>
+
+                <label class="form-field">
+                  <span class="form-label" data-translate="emailLabel">Email</span>
+                  <input
+                    type="email"
+                    name="email"
+                    class="form-input"
+                    placeholder="name@company.com"
+                    maxlength="200"
+                    autocomplete="email"
+                    required
+                  />
+                </label>
+
+                <label class="form-field">
+                  <span class="form-label" data-translate="phoneLabel">WhatsApp / phone number</span>
+                  <input
+                    type="tel"
+                    name="phone"
+                    class="form-input"
+                    placeholder="+62 812 3456 7890"
+                    pattern="\+?[0-9 \(\)\-]{8,20}"
+                    maxlength="20"
+                    autocomplete="tel"
+                    inputmode="tel"
+                    required
+                  />
+                </label>
+
+                <label class="form-field">
+                  <span class="form-label" data-translate="topicLabel">What do you need?</span>
+                  <select name="topic" class="form-input" required>
+                    <option value="" disabled selected data-translate="topicPlaceholder">Choose one…</option>
+                    <option value="website" data-translate="topicWebsite">Website / web app</option>
+                    <option value="mobile_app" data-translate="topicMobile">Mobile app</option>
+                    <option value="system" data-translate="topicSystem">Business system (HRIS, ERP, finance…)</option>
+                    <option value="other" data-translate="topicOther">Something else</option>
+                  </select>
+                </label>
+              </div>
+
+              <label class="form-field">
+                <span class="form-label" data-translate="messageLabel">Message</span>
+                <textarea
+                  name="message"
+                  class="form-input"
+                  placeholder="Tell me a bit about your project…"
+                  data-translate-placeholder="yourMessage"
+                  maxlength="2000"
+                  required
+                ></textarea>
+              </label>
+
+              <p class="form-hint" data-translate="requiredHint">All fields are required so I can get back to you.</p>
+
+              <button class="form-btn" type="submit">
+                <ion-icon name="chatbubbles-outline"></ion-icon>
+                <span data-translate="startChat">Start Chat</span>
+              </button>
+            </form>
+
+            <div class="chat-box" data-chat-box hidden>
+              <div class="chat-header">
+                <img src="./assets/images/avatar.webp" alt="" width="40" height="40" />
+                <div>
+                  <p class="chat-header-name">Rizal Fauzan</p>
+                  <p class="chat-header-status" data-translate="chatReplyTime">Usually replies within a few hours</p>
+                </div>
+              </div>
+
+              <ol class="chat-messages" data-chat-messages aria-live="polite"></ol>
+
+              <form class="chat-compose" data-chat-compose>
+                <textarea
+                  rows="1"
+                  class="chat-input"
+                  placeholder="Write a message…"
+                  data-translate-placeholder="writeMessage"
+                  aria-label="Message"
+                  maxlength="2000"
+                  data-chat-input
+                ></textarea>
+                <button type="submit" class="chat-send" aria-label="Send">
+                  <ion-icon name="send"></ion-icon>
+                </button>
+              </form>
+            </div>
+
+            <p class="form-status" data-chat-status role="status" aria-live="polite"></p>
+          </section>
+        </article>
       </div>
     </main>
 
@@ -2416,6 +2872,13 @@
     - custom js link
   -->
     <script src="./assets/js/script.js"></script>
+
+    <!--
+    - live chat (Supabase Realtime)
+  -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="./assets/js/chat-config.js"></script>
+    <script src="./assets/js/chat.js" defer></script>
 
     <!--
     - ionicon link
@@ -2442,6 +2905,44 @@
   </button>
 
   <!--
+    - Floating WhatsApp button
+  -->
+  <a
+    href="https://wa.me/6281290019303"
+    class="whatsapp-float"
+    target="_blank"
+    rel="noopener"
+    aria-label="Chat on WhatsApp"
+  >
+    <ion-icon name="logo-whatsapp"></ion-icon>
+  </a>
+
+  <!--
+    - Language & theme toggles
+  -->
+  <div class="site-controls">
+    <button
+      type="button"
+      class="site-control-btn"
+      data-lang-toggle
+      aria-label="Switch language"
+      title="Switch language"
+    >
+      <span data-lang-label>ID</span>
+    </button>
+
+    <button
+      type="button"
+      class="site-control-btn"
+      data-theme-toggle
+      aria-label="Toggle dark mode"
+      title="Toggle dark mode"
+    >
+      <ion-icon name="moon-outline" data-theme-icon></ion-icon>
+    </button>
+  </div>
+
+  <!--
     - Schema.org structured data
   -->
     <script type="application/ld+json">
@@ -2450,8 +2951,9 @@
         "@type": "Person",
         "name": "Rizal Fauzan",
         "jobTitle": "Full Stack Developer & Flutter Developer",
-        "url": "",
-        "image": "./assets/images/Rizal Fauzan.png",
+        "url": "https://portfolio-rizal-liart.vercel.app/",
+        "image": "https://portfolio-rizal-liart.vercel.app/assets/images/Rizal%20Fauzan.png",
+        "email": "mailto:rizalfauzan190@gmail.com",
         "sameAs": [
           "https://www.instagram.com/rizal.fzn/",
           "https://www.linkedin.com/in/rizal-fauzan-36785623b/",
