@@ -9,9 +9,12 @@
 
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="icon" href="./icons/icon-192.png" type="image/png" />
-    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Chat Admin" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="description" content="Admin inbox for portfolio chat." />
 
     <!-- apply the saved theme before paint -->
     <script>
@@ -52,6 +55,8 @@
       <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
       <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
       <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="i-install" viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 19h14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 3v12m0-12-4 4m4-4 4 4M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
       <symbol id="i-chat" viewBox="0 0 24 24"><path d="M5 5h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-7l-5 4v-4H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
     </svg>
 
@@ -100,6 +105,9 @@
           <div class="captcha" data-login-captcha hidden></div>
           <button type="submit" class="btn btn-primary btn-block">Sign in</button>
           <button type="button" class="link-btn" data-forgot>Forgot password?</button>
+          <button type="button" class="btn btn-block install-cta" data-install hidden>
+            <svg><use href="#i-install" /></svg> Install Chat Admin app
+          </button>
           <p class="form-error" data-login-error role="alert"></p>
           <p class="form-success" data-login-info role="status"></p>
         </form>
@@ -155,6 +163,10 @@
         </button>
 
         <div class="rail-spacer"></div>
+
+        <button type="button" class="rail-btn rail-install" data-install hidden aria-label="Install app" title="Install app">
+          <svg><use href="#i-install" /></svg>
+        </button>
 
         <button type="button" class="rail-btn" data-push-toggle aria-label="Enable notifications" title="Enable notifications">
           <svg><use href="#i-bell" /></svg>
@@ -355,6 +367,17 @@
         </div>
       </aside>
     </div>
+
+    <dialog class="install-dialog" data-ios-install>
+      <h2>Install on iPhone / iPad</h2>
+      <ol>
+        <li>Tap <strong>Share</strong> <svg><use href="#i-share" /></svg> in Safari's toolbar.</li>
+        <li>Choose <strong>Add to Home Screen</strong>.</li>
+        <li>Tap <strong>Add</strong>, then open <strong>Chat Admin</strong> from your home screen.</li>
+      </ol>
+      <p class="muted small">Notifications on iPhone only work in the app opened from the home screen (iOS 16.4 or newer).</p>
+      <form method="dialog"><button class="btn btn-primary btn-block">Got it</button></form>
+    </dialog>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
     <script src="../assets/js/chat-config.js"></script>

@@ -76,7 +76,8 @@ grant execute on function public.is_chat_admin() to anon;
 create policy "visitors see the owner's presence"
   on realtime.messages for select
   to authenticated
-  using (realtime.topic() = 'owner-presence' and realtime.messages.extension = 'presence');
+  -- joining a private channel checks read access for broadcast as well
+  using (realtime.topic() = 'owner-presence' and realtime.messages.extension in ('broadcast', 'presence'));
 
 create policy "only admins announce presence"
   on realtime.messages for insert

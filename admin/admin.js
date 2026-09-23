@@ -621,6 +621,7 @@
     presenceChannel = client.channel("owner-presence", {
       config: { private: true, presence: { key: "owner" } }
     });
+    presenceChannel.on("presence", { event: "sync" }, () => {});
     presenceChannel.subscribe((status) => {
       if (status === "SUBSCRIBED") syncPresence();
       else if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") setPresenceUi(false, "Offline");
@@ -937,6 +938,41 @@
     return token;
   };
 
+  // ----------------------------------------------------------- install
+  // Chrome/Edge/Android fire beforeinstallprompt; iOS Safari needs manual steps
+
+  const installButtons = document.querySelectorAll("[data-install]");
+  const iosDialog = $("[data-ios-install]");
+  let deferredInstall = null;
+
+  const setInstallVisible = (visible) => installButtons.forEach((b) => { b.hidden = !visible; });
+
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredInstall = e;
+    setInstallVisible(true);
+  });
+
+  window.addEventListener("appinstalled", () => {
+    deferredInstall = null;
+    setInstallVisible(false);
+  });
+
+  if (isIos && !isStandalone) setInstallVisible(true);
+
+  installButtons.forEach((b) =>
+    b.addEventListener("click", async () => {
+      if (deferredInstall) {
+        deferredInstall.prompt();
+        const { outcome } = await deferredInstall.userChoice;
+        if (outcome === "accepted") setInstallVisible(false);
+        deferredInstall = null;
+      } else if (isIos) {
+        iosDialog.showModal();
+      }
+    })
+  );
+
   // -------------------------------------------------------------- auth
 
   const enterInbox = async (session) => {
@@ -956,8 +992,11 @@
     loadQuickReplies();
     refreshPushState();
 
-    const wanted = new URLSearchParams(location.search).get("c");
+    const params = new URLSearchParams(location.search);
+    const wanted = params.get("c");
     if (wanted) openConversation(wanted, { pushHistory: false });
+    if (params.get("filter") === "unread") document.querySelector('[data-filter="unread"]').click();
+    if (params.get("panel") === "testimonials") showPanel("testimonials");
   };
 
   $("[data-login-form]").addEventListener("submit", async (e) => {

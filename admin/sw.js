@@ -3,7 +3,7 @@
 // Service worker for the chat admin PWA: shows Web Push notifications sent by
 // the notify-admin Edge Function and opens the right conversation on click.
 
-const SHELL_CACHE = "chat-admin-shell-v4";
+const SHELL_CACHE = "chat-admin-shell-v5";
 const SHELL = ["./", "./admin.css", "./admin.js", "../assets/js/chat-config.js", "./icons/icon-192.png"];
 
 self.addEventListener("install", (event) => {
