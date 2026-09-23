@@ -129,8 +129,8 @@ CASES = [
             (("Type", "Jenis"), ("Government, freelance", "Pemerintahan, freelance")),
             (("Status", "Status"), ("Live", "Live")),
         ],
-        "live": "https://sikepang.mimikakab.go.id/login",
-        "hero": ("sikepang-mimika.webp", ("Sikepang Mimika", "Sikepang Mimika")),
+        "live": "https://sikepang.mimikakab.go.id/",
+        "hero": ("sikepang-portal.webp", ("Public portal", "Portal publik")),
         "overview": [
             (
                 "The regency government needed its food security data in a form officials could actually read. I built the frontend on top of the APIs provided by the backend team.",
@@ -138,14 +138,16 @@ CASES = [
             ),
         ],
         "built": [
-            ("The dashboard and the landing page, built with Vue.js.", "Dashboard dan landing page yang dibangun dengan Vue.js."),
+            ("The dashboard and the public portal, built with Vue.js.", "Dashboard dan portal publik yang dibangun dengan Vue.js."),
+            ("Portal sections for articles, a food price panel, aid recipients, a gallery, agenda and surveys.",
+             "Bagian portal untuk artikel, panel harga pangan, penerima bantuan, galeri, agenda, dan survei."),
             ("Integration with the APIs provided by the backend team.", "Integrasi dengan API yang disediakan tim backend."),
             ("A responsive, easy-to-use interface for a government agency.", "Antarmuka yang responsif dan mudah digunakan untuk instansi pemerintah."),
             ("Food security data visualised as charts and tables.", "Visualisasi data ketahanan pangan dalam bentuk grafik dan tabel."),
             ("Testing and bug fixing before release to users.", "Pengujian dan perbaikan bug sebelum dirilis ke pengguna."),
         ],
         "stack": ["Vue.js", "Vite", "REST API", "Laravel (backend team)"],
-        "gallery": [],
+        "gallery": [("sikepang-mimika.webp", ("Dashboard sign-in", "Login dashboard"))],
     },
 ]
 
