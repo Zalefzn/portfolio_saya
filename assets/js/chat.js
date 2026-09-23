@@ -220,17 +220,30 @@
     askNotificationPermission();
 
     try {
-      let { data: { session } } = await client.auth.getSession();
-      if (!session) {
+      const freshIdentity = async function () {
+        await client.auth.signOut().catch(function () {});
         const { error } = await client.auth.signInAnonymously({ options: { data: { name: name } } });
         if (error) throw error;
-      }
+      };
 
-      const { data, error } = await client
-        .from("conversations")
-        .insert({ visitor_name: name, visitor_email: email, visitor_phone: phone, topic: topic })
-        .select()
-        .single();
+      const createConversation = function () {
+        return client
+          .from("conversations")
+          .insert({ visitor_name: name, visitor_email: email, visitor_phone: phone, topic: topic })
+          .select()
+          .single();
+      };
+
+      const { data: { session } } = await client.auth.getSession();
+      if (!session) await freshIdentity();
+
+      let { data, error } = await createConversation();
+      // a stored session can outlive its anonymous user (e.g. after a cleanup):
+      // start over with a new identity once
+      if (error && session && !/too many messages/i.test(error.message)) {
+        await freshIdentity();
+        ({ data, error } = await createConversation());
+      }
       if (error) throw error;
 
       conversation = data;
